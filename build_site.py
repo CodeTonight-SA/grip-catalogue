@@ -167,13 +167,6 @@ def html(records: list) -> str:
   .card .floor .chip {{ font-size:10.5px; letter-spacing:.4px; color:var(--charcoal);
     background:#f3eee6; border:1px solid var(--rule); border-radius:20px; padding:2px 9px; }}
   .card .floor .chip b {{ color:var(--garnet); font-weight:700; }}
-  /* Transcribed lyrics (Vulavula STT) — collapsible, provenance-stamped. */
-  .card details.lyrics {{ margin:0 0 10px; }}
-  .card details.lyrics summary {{ cursor:pointer; font-size:11px; letter-spacing:.5px;
-    text-transform:uppercase; color:var(--garnet); font-weight:700; }}
-  .card details.lyrics .body {{ white-space:pre-wrap; font-size:12.5px; color:var(--ink);
-    line-height:1.5; margin:7px 0 0; max-height:220px; overflow:auto; }}
-  .card details.lyrics .prov {{ font-size:10px; color:var(--muted); font-style:italic; margin-top:5px; }}
   .card audio {{ width:100%; height:34px; }}
   footer {{ color:var(--muted); font-size:12.5px; padding:40px 0 60px; text-align:center; }}
   footer .caveat {{ font-style:italic; max-width:680px; margin:8px auto 0; }}
@@ -289,14 +282,6 @@ function floorHTML(r) {{
   if (r.key) chips.push(`<span class="chip">key <b>${{fmtKey(r)}}</b></span>`);
   return chips.length ? `<div class="floor" title="Measured by librosa, not guessed">${{chips.join("")}}</div>` : "";
 }}
-function lyricsHTML(r) {{
-  // Real transcribed lyrics (Vulavula). key_lyric (the model's guess) still
-  // shows above as the pull-quote; this is the full, provenance-stamped text.
-  if (r.lyrics_source !== "vulavula" || !r.lyrics) return "";
-  return `<details class="lyrics"><summary>Lyrics</summary>`+
-    `<div class="body">${{esc(r.lyrics)}}</div>`+
-    `<div class="prov">Transcribed via Vulavula${{r.lyrics_lang? " ("+esc(r.lyrics_lang)+")":""}}</div></details>`;
-}}
 function cardHTML(r) {{
   const tags = [r.genre, Array.isArray(r.mood)? r.mood.join(", "): r.mood, r.instrumental? "instrumental": (r.language||"")]
     .filter(Boolean).join(" · ");
@@ -308,7 +293,6 @@ function cardHTML(r) {{
     ${{floorHTML(r)}}
     <div class="one">${{esc(r.one_line||"")}}</div>
     ${{r.key_lyric ? `<div class="lyric">&ldquo;${{esc(r.key_lyric)}}&rdquo;</div>`:""}}
-    ${{lyricsHTML(r)}}
     ${{audio}}
   </div>`;
 }}
