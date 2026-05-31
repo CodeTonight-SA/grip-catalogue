@@ -176,6 +176,7 @@ def html(records: list) -> str:
   <p class="kicker">grip-hear · A Listening Instrument</p>
   <h1>The Catalogue</h1>
   <p class="thesis">Songs by Laurie Scheepers — published tracks, demos, alt-mixes, pre-masters, and phone recordings — heard by the machine he built, and turned into something you can play, map, and search by how you feel.</p>
+  <p style="margin:14px 0 0;font-family:Georgia,serif;"><a href="musical-thread.html" style="color:#b0667d;font-size:15px;letter-spacing:.5px;border-bottom:1px solid #8a2846;padding-bottom:2px;text-decoration:none;">Read: The Musical Thread — how this music is written, across the genres &rarr;</a></p>
   <div class="numbers">
     <div class="n"><span class="big">{n}</span><span class="lab">Songs</span></div>
     <div class="n"><span class="big">{n_movements}</span><span class="lab">Movements</span></div>

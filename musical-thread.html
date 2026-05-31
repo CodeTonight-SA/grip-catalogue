@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Musical Thread — Laurie Scheepers</title>
+<style>
+  :root{
+    --ink:#1a1a1e; --cream:#faf8f4; --garnet:#8a2846; --rose:#b0667d;
+    --muted:#9a948a; --softcream:#d8d2c8; --track:#2a2a30; --energy:#b0667d;
+    --darkbar:#7a5cc0; --line:#3a3a42;
+  }
+  *{box-sizing:border-box}
+  .mt-section{
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    background:var(--ink); color:var(--cream); line-height:1.6;
+    padding:0; margin:0; -webkit-font-smoothing:antialiased;
+  }
+  .mt-wrap{max-width:920px; margin:0 auto; padding:48px 28px 60px}
+  .mt-eyebrow{
+    font-family:Georgia,serif; letter-spacing:5px; text-transform:uppercase;
+    color:var(--rose); font-size:11px; margin:0 0 10px;
+  }
+  .mt-section h1{
+    font-family:Georgia,serif; font-size:38px; line-height:1.08; margin:0 0 6px;
+    letter-spacing:-.3px; color:var(--cream);
+  }
+  .mt-section h1 .sub{display:block; font-size:18px; color:var(--softcream); font-style:italic; margin-top:10px; font-weight:400}
+  .mt-lede{
+    font-family:Georgia,serif; font-style:italic; font-size:15px;
+    color:var(--softcream); max-width:680px; margin:18px 0 0;
+  }
+  .mt-council{
+    display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0;
+  }
+  .mt-chip{
+    font-size:10.5px; letter-spacing:.6px; text-transform:uppercase;
+    border:1px solid var(--line); border-radius:20px; padding:5px 12px;
+    color:var(--softcream); background:rgba(255,255,255,.02);
+  }
+  .mt-chip.lead{border-color:var(--garnet); color:var(--rose)}
+  .mt-headline{
+    border-left:4px solid var(--garnet); background:rgba(138,40,70,.10);
+    padding:20px 24px; margin:34px 0; border-radius:0 6px 6px 0;
+  }
+  .mt-headline .k{
+    font-family:Georgia,serif; font-size:10px; letter-spacing:3px;
+    text-transform:uppercase; color:var(--garnet); margin:0 0 8px;
+  }
+  .mt-headline p{margin:0; font-size:16.5px; color:var(--cream)}
+  .mt-headline .big{font-family:Georgia,serif; font-size:24px; color:var(--rose); font-style:italic}
+  .mt-h2{
+    font-family:Georgia,serif; font-size:22px; color:var(--cream);
+    border-bottom:2px solid var(--garnet); display:inline-block;
+    padding-bottom:4px; margin:46px 0 4px;
+  }
+  .mt-num{font-family:Georgia,serif; color:var(--rose); font-size:15px; letter-spacing:2px}
+  .mt-section p{margin:14px 0; font-size:14.5px; color:#e8e3da}
+  .mt-section strong{color:var(--cream)}
+  .mt-section em{color:var(--softcream)}
+  table.mt-tbl{
+    width:100%; border-collapse:collapse; margin:18px 0; font-size:13.5px;
+  }
+  table.mt-tbl th{
+    text-align:left; font-family:Georgia,serif; font-weight:700;
+    color:var(--rose); border-bottom:1px solid var(--garnet);
+    padding:8px 10px; font-size:11px; letter-spacing:.8px; text-transform:uppercase;
+  }
+  table.mt-tbl td{
+    padding:8px 10px; border-bottom:1px solid var(--line); color:#e8e3da;
+  }
+  table.mt-tbl tr:last-child td{border-bottom:none}
+  .mt-trackname{font-family:Georgia,serif; font-style:italic; color:var(--rose)}
+  /* energy/darkness field plot */
+  .mt-field{
+    position:relative; height:300px; margin:24px 0 8px;
+    border:1px solid var(--line); border-radius:6px;
+    background:
+      linear-gradient(to right, rgba(176,102,125,.04), rgba(176,102,125,.10)),
+      var(--ink);
+  }
+  .mt-axis-x,.mt-axis-y{position:absolute; font-size:10px; color:var(--muted); letter-spacing:.5px; text-transform:uppercase}
+  .mt-axis-x{bottom:6px; right:12px}
+  .mt-axis-y{top:10px; left:10px; writing-mode:vertical-rl; transform:rotate(180deg)}
+  .mt-mid-v{position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--line)}
+  .mt-mid-h{position:absolute; top:50%; left:0; right:0; height:1px; background:var(--line)}
+  .mt-mid-label{position:absolute; font-size:9px; color:var(--muted); background:var(--ink); padding:1px 5px}
+  .mt-dot{position:absolute; border-radius:50%; transform:translate(-50%,50%); border:1px solid rgba(250,248,244,.25)}
+  .mt-dot .tip{
+    display:none; position:absolute; bottom:120%; left:50%; transform:translateX(-50%);
+    white-space:nowrap; background:#000; color:var(--cream); font-size:10px;
+    padding:3px 7px; border-radius:4px; z-index:5; border:1px solid var(--garnet);
+  }
+  .mt-dot:hover .tip{display:block}
+  .mt-dot:hover{outline:2px solid var(--rose)}
+  .mt-legend{display:flex; flex-wrap:wrap; gap:14px; margin:10px 0 0; font-size:11px; color:var(--softcream)}
+  .mt-legend span{display:inline-flex; align-items:center; gap:6px}
+  .mt-swatch{width:11px; height:11px; border-radius:50%; display:inline-block}
+  /* tempo bar */
+  .mt-tempo{margin:18px 0}
+  .mt-tempo-row{display:flex; align-items:center; gap:10px; margin:5px 0; font-size:12px}
+  .mt-tempo-row .lbl{width:118px; color:var(--softcream); font-family:Georgia,serif; font-style:italic; text-align:right; flex:none}
+  .mt-tempo-bar{flex:1; height:9px; background:var(--track); border-radius:5px; position:relative}
+  .mt-tempo-bar .fill{position:absolute; top:0; bottom:0; background:var(--garnet); border-radius:5px}
+  .mt-tempo-row .val{width:62px; color:var(--muted); flex:none; font-size:11px}
+  .mt-callout{
+    border:1px solid var(--line); border-left:4px solid var(--rose);
+    background:rgba(255,255,255,.02); padding:14px 18px; margin:20px 0;
+    border-radius:0 6px 6px 0; font-size:14px;
+  }
+  .mt-callout .tag{font-family:Georgia,serif; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--rose); display:block; margin-bottom:6px}
+  blockquote.mt-q{
+    font-family:Georgia,serif; font-style:italic; font-size:16px;
+    color:var(--cream); border-left:3px solid var(--garnet);
+    margin:22px 0; padding:6px 0 6px 20px;
+  }
+  .mt-falsify{font-size:12.5px; color:var(--muted); font-style:italic; margin:10px 0 0}
+  .mt-falsify b{color:var(--rose); font-style:normal; font-weight:700}
+  .mt-limits{
+    border:1px solid var(--line); border-radius:6px; padding:22px 26px;
+    margin:40px 0 0; background:rgba(0,0,0,.18);
+  }
+  .mt-limits ul{margin:12px 0 0; padding-left:20px}
+  .mt-limits li{margin:9px 0; font-size:13.5px; color:#d8d2c8}
+  .mt-foot{
+    font-family:Georgia,serif; font-style:italic; color:var(--rose);
+    text-align:center; font-size:14px; margin:46px 0 0;
+    padding-top:24px; border-top:1px solid var(--line);
+  }
+  @media (max-width:560px){
+    .mt-section h1{font-size:28px}
+    .mt-tempo-row .lbl{width:90px}
+    .mt-field{height:240px}
+  }
+</style></head>
+<body>
+<section class="mt-section">
+<div class="mt-wrap">
+
+  <p class="mt-eyebrow">GRIP Hears · The Music Itself · A Council Reading</p>
+  <h1>The Musical Thread
+    <span class="sub">How Laurie Scheepers writes music — and what runs through all 78 tracks</span>
+  </h1>
+  <p class="mt-lede">
+    Not the lyrics — the music. Four frontier models read the same measured data
+    (librosa-extracted tempo and key, plus energy and darkness scores) for every
+    track across seven movements, and were asked the same question: what makes it
+    all recognisably <em>him</em>?
+  </p>
+  <div class="mt-council">
+    <span class="mt-chip lead">Claude · Opus 4.8 · synthesiser</span>
+    <span class="mt-chip">OpenAI · gpt-4o</span>
+    <span class="mt-chip">xAI · grok-3</span>
+    <span class="mt-chip">DeepSeek · deepseek-chat</span>
+  </div>
+
+  <div class="mt-headline">
+    <p class="k">The headline, in one line</p>
+    <p>All four models, reasoning independently, landed on the same single signature:
+       <span class="big">he writes in E.</span></p>
+    <p style="margin-top:12px;font-size:14.5px;color:#e8e3da">
+      E major (13) and E minor (11) together account for <strong>24 of 78 tracks
+      (~31%)</strong> — the next most common key, D major, has only 8. Roughly three
+      times the rate of anything else. Not a coincidence of taste: the shape of a
+      hand on a guitar neck, and it survives every genre swerve he takes.
+    </p>
+  </div>
+
+  <!-- 1 -->
+  <div><span class="mt-num">01</span></div>
+  <h2 class="mt-h2">Tonality &amp; harmony — the E-centre</h2>
+  <table class="mt-tbl">
+    <tr><th>Key</th><th>Tracks</th><th>Read</th></tr>
+    <tr><td>E major</td><td>13</td><td>the open, ringing home key</td></tr>
+    <tr><td>E minor</td><td>11</td><td>the same shape, turned to grief</td></tr>
+    <tr><td>D major</td><td>8</td><td>next nearest — less than half as common</td></tr>
+    <tr><td>G major / A major</td><td>6 each</td><td>the other open-guitar keys</td></tr>
+    <tr><td>A minor</td><td>5</td><td></td></tr>
+  </table>
+  <p>
+    E is the most resonant key on a standard-tuned guitar — the open low and high
+    E strings ring through almost any voicing, and the I–IV–V in E (E–A–B) sits
+    under the fingers in open position. When a catalogue clusters this hard on E,
+    the simplest explanation is <strong>guitar-first writing with open-position
+    muscle memory</strong>: the key is chosen by the hand before the ear gets a
+    vote. The thread holds across wildly different genres —
+    <span class="mt-trackname">Golden Hair</span> (E major, acoustic folk),
+    <span class="mt-trackname">Ek is die een</span> (E major, alt-rock),
+    <span class="mt-trackname">Fuck Everything</span> (E minor, the darkest track
+    at 0.9), <span class="mt-trackname">the river must flow</span> (E major,
+    classical-guitar instrumental). Four genres, one root note.
+  </p>
+  <div class="mt-callout">
+    <span class="tag">Where the council disagreed — resolved against the data</span>
+    OpenAI and xAI claimed the major/minor split "maps cleanly onto the movements."
+    DeepSeek refuted it, and the data agrees: E appears in <strong>six of seven
+    movements</strong>, and The Confessionals alone holds both — five E-major
+    tracks and three E-minor. The honest, stronger claim: <strong>the E root is
+    the constant; major-versus-minor is a local mood choice, not a movement
+    boundary.</strong> He reaches for the same shape, then decides song by song
+    whether it is bright or grieving.
+  </div>
+  <p class="mt-falsify"><b>Falsified if:</b> future work centres on a non-guitar
+    key (B-flat, F) or abandons E as the modal home — that would make the E-centre
+    a phase, not a method.</p>
+
+  <!-- 2 -->
+  <div><span class="mt-num">02</span></div>
+  <h2 class="mt-h2">Tempo &amp; rhythm — the 123 cluster and the 172 illusion</h2>
+  <p>
+    Tempo across 78 tracks: min 86, max 172, <strong>mean 124, median 123</strong>.
+    The catalogue lives in a tight ~99–143 BPM band. 123 BPM is close to a natural
+    moderate strum-and-sing pace — a <strong>default body-tempo</strong>. He does
+    not write to a click; he writes to a pulse, and it is roughly the same pulse
+    most weeks.
+  </p>
+  <div class="mt-tempo">
+    <div class="mt-tempo-row"><span class="lbl">Luister (demo)</span><div class="mt-tempo-bar"><div class="fill" style="left:0%;width:0.7%"></div></div><span class="val">86 — floor</span></div>
+    <div class="mt-tempo-row"><span class="lbl">median catalogue</span><div class="mt-tempo-bar"><div class="fill" style="left:43%;width:1%"></div></div><span class="val">123</span></div>
+    <div class="mt-tempo-row"><span class="lbl">full-band push</span><div class="mt-tempo-bar"><div class="fill" style="left:43%;width:34%"></div></div><span class="val">123→152</span></div>
+    <div class="mt-tempo-row"><span class="lbl">"172" tracks</span><div class="mt-tempo-bar"><div class="fill" style="left:99.3%;width:0.7%"></div></div><span class="val">172 — see note</span></div>
+  </div>
+  <div class="mt-callout">
+    <span class="tag">DeepSeek's catch — the strongest tempo insight</span>
+    The 172 BPM ceiling (<span class="mt-trackname">You've got to hide your love
+    away</span>, <span class="mt-trackname">There's More to All of This</span>,
+    <span class="mt-trackname">Jam</span>, <span class="mt-trackname">Sometimes</span>,
+    the Workshop mixes) is almost exactly <strong>double 86</strong> and close to
+    double the median. These are very likely <strong>felt in half-time</strong> —
+    the underlying pulse is ~86 and librosa is counting the faster subdivision.
+    The proof: <span class="mt-trackname">Jam</span> sustains 172 BPM over a
+    71-minute take. Nobody plays <em>fast</em> for 71 minutes. So the experienced
+    tempo range is <strong>narrower</strong> than the numbers imply; the cluster is
+    even tighter than it looks.
+  </div>
+  <p>
+    The 86 floor (<span class="mt-trackname">Luister</span>, his only sub-89 track)
+    is a deliberate drag — and a <em>demo</em>, fitting a writer who slows right
+    down when it is just him and the guitar. The genuine accelerations are the
+    full-band pushes: <span class="mt-trackname">Drink tequila uit 'n skoen</span>
+    (152 BPM, energy 0.8) and <span class="mt-trackname">Sometimes</span> (152 BPM,
+    prog-metal). <strong>Speed arrives with the band, not in the writing.</strong>
+  </p>
+  <p class="mt-falsify"><b>Falsified if:</b> a track lands genuinely above ~200 or
+    below ~80 BPM at its felt pulse, or the 172 tracks prove truly double-time in
+    performance rather than half-time hypermeter.</p>
+
+  <!-- 3 -->
+  <div><span class="mt-num">03</span></div>
+  <h2 class="mt-h2">The energy × darkness field — life on the midline</h2>
+  <p>
+    Mean energy <strong>0.44</strong>, mean darkness <strong>0.51</strong>. He sits
+    almost exactly in the middle of both axes — <strong>equipoise as a default
+    posture</strong>. The movements fan out from that centre in characteristic
+    directions. Hover any point.
+  </p>
+  <div class="mt-field" aria-label="Energy versus darkness scatter, movements colour-coded">
+    <span class="mt-axis-x">Energy →</span>
+    <span class="mt-axis-y">Darkness →</span>
+    <div class="mt-mid-v"></div><div class="mt-mid-h"></div>
+    <span class="mt-mid-label" style="left:50%;bottom:4px;transform:translateX(-50%)">midline 0.5</span>
+    <!-- dots: left% = energy*100, bottom% = darkness*100 (translate centres). size by duration sense -->
+    <!-- Confessionals (garnet) -->
+    <div class="mt-dot" style="left:40%;bottom:70%;width:11px;height:11px;background:#8a2846"><span class="tip">Aisle Seat · Confessionals · E0.4 D0.7</span></div>
+    <div class="mt-dot" style="left:30%;bottom:40%;width:11px;height:11px;background:#8a2846"><span class="tip">Another Thought · Confessionals · E0.3 D0.4</span></div>
+    <div class="mt-dot" style="left:20%;bottom:40%;width:11px;height:11px;background:#8a2846"><span class="tip">I'm Waiting · Confessionals · E0.2 D0.4</span></div>
+    <div class="mt-dot" style="left:30%;bottom:70%;width:11px;height:11px;background:#8a2846"><span class="tip">Happiness That's Broke · Confessionals · E0.3 D0.7</span></div>
+    <div class="mt-dot" style="left:40%;bottom:60%;width:11px;height:11px;background:#8a2846"><span class="tip">Reconnected · Confessionals · E0.4 D0.6</span></div>
+    <div class="mt-dot" style="left:60%;bottom:20%;width:11px;height:11px;background:#8a2846"><span class="tip">ten minutes he said · Confessionals · E0.6 D0.2</span></div>
+    <!-- The Band (rose) -->
+    <div class="mt-dot" style="left:85%;bottom:30%;width:12px;height:12px;background:#b0667d"><span class="tip">Ek is die een 4 · The Band · E0.85 D0.3</span></div>
+    <div class="mt-dot" style="left:80%;bottom:50%;width:12px;height:12px;background:#b0667d"><span class="tip">Drink tequila uit 'n skoen · The Band · E0.8 D0.5</span></div>
+    <div class="mt-dot" style="left:65%;bottom:15%;width:12px;height:12px;background:#b0667d"><span class="tip">howzit my bru · The Band · E0.65 D0.15 — lightest track</span></div>
+    <div class="mt-dot" style="left:70%;bottom:75%;width:12px;height:12px;background:#b0667d"><span class="tip">Opportunities… · The Band · E0.7 D0.75</span></div>
+    <div class="mt-dot" style="left:60%;bottom:70%;width:12px;height:12px;background:#b0667d"><span class="tip">Nemesis · The Band · E0.6 D0.7</span></div>
+    <!-- The Dark Room (purple) -->
+    <div class="mt-dot" style="left:80%;bottom:90%;width:13px;height:13px;background:#7a5cc0"><span class="tip">Fuck Everything · Dark Room · E0.8 D0.9 — darkest</span></div>
+    <div class="mt-dot" style="left:90%;bottom:80%;width:13px;height:13px;background:#7a5cc0"><span class="tip">Trip to the Circus · Dark Room · E0.9 D0.8</span></div>
+    <div class="mt-dot" style="left:90%;bottom:80%;width:13px;height:13px;background:#7a5cc0;left:88%;bottom:82%"><span class="tip">Mood Stabilizing Depressant Circus · Dark Room · E0.9 D0.8</span></div>
+    <div class="mt-dot" style="left:20%;bottom:40%;width:13px;height:13px;background:#7a5cc0;left:22%"><span class="tip">it's gonna go dark · Dark Room · E0.2 D0.4 — the floor</span></div>
+    <div class="mt-dot" style="left:30%;bottom:80%;width:13px;height:13px;background:#7a5cc0"><span class="tip">It's time · Dark Room · E0.3 D0.8</span></div>
+    <!-- Without Words (cream-muted) -->
+    <div class="mt-dot" style="left:20%;bottom:20%;width:11px;height:11px;background:#d8d2c8"><span class="tip">the river must flow · Without Words · E0.2 D0.2</span></div>
+    <div class="mt-dot" style="left:80%;bottom:30%;width:11px;height:11px;background:#d8d2c8"><span class="tip">The Black Sheep · Without Words · E0.8 D0.3</span></div>
+    <div class="mt-dot" style="left:80%;bottom:70%;width:11px;height:11px;background:#d8d2c8"><span class="tip">Sometimes · Without Words · E0.8 D0.7</span></div>
+    <div class="mt-dot" style="left:30%;bottom:30%;width:11px;height:11px;background:#d8d2c8"><span class="tip">Moving on up · Without Words · E0.3 D0.2</span></div>
+    <!-- the mean marker -->
+    <div class="mt-dot" style="left:44%;bottom:51%;width:16px;height:16px;background:transparent;border:2px solid #faf8f4"><span class="tip">CATALOGUE MEAN · E0.44 D0.51</span></div>
+  </div>
+  <div class="mt-legend">
+    <span><span class="mt-swatch" style="background:#8a2846"></span>The Confessionals</span>
+    <span><span class="mt-swatch" style="background:#b0667d"></span>The Band</span>
+    <span><span class="mt-swatch" style="background:#7a5cc0"></span>The Dark Room</span>
+    <span><span class="mt-swatch" style="background:#d8d2c8"></span>Without Words</span>
+    <span><span class="mt-swatch" style="background:transparent;border:2px solid #faf8f4"></span>Catalogue mean</span>
+  </div>
+  <p style="margin-top:20px">
+    The outliers define the <em>boundaries</em> of his world rather than betraying
+    drift. <strong>Maximum intensity:</strong>
+    <span class="mt-trackname">Fuck Everything</span> (E0.8 / D0.9) and
+    <span class="mt-trackname">Trip to the Circus</span> (E0.9 / D0.8) — the
+    top-right corner. <strong>Maximum levity:</strong>
+    <span class="mt-trackname">howzit my bru</span> (E0.65 / D0.15) — the single
+    lightest track, proof he <em>can</em> write bright, he just rarely chooses to.
+    The striking fact: the same writer who makes E0.2 confessionals also makes E0.9
+    noise pieces, and <strong>both stay anchored near darkness 0.5.</strong> The
+    energy dial swings hugely; the darkness dial barely moves off centre. That is a
+    temperament — a melancholy that is constant regardless of volume.
+  </p>
+  <p class="mt-falsify"><b>Falsified if:</b> measured more precisely, darkness
+    spreads as widely as energy — that would undercut "constant darkness, variable
+    energy."</p>
+
+  <!-- 4 -->
+  <div><span class="mt-num">04</span></div>
+  <h2 class="mt-h2">The thread — what makes it all recognisably him</h2>
+  <p>
+    The central question, and the council answer is unusually unanimous: the
+    unifying signature is <strong>harmonic, not melodic or dynamic.</strong> It is
+    the E-centre, reinforced by the midline darkness. Stated honestly: from
+    measured metadata you can defend a <strong>harmonic habit</strong> (key
+    distribution) and a <strong>temperamental constant</strong> (darkness clustered
+    near 0.5 across every movement). You <em>cannot</em> directly defend a "melodic
+    instinct" or a dynamic "swerve" from tempo/key/energy alone — those live in the
+    notes and the waveform. xAI was explicit and correct: "melodic or dynamic
+    swerve is not measurable here; harmonic habit is." So the defensible thread is
+    the one the numbers carry:
+  </p>
+  <blockquote class="mt-q">
+    He returns to E, and he returns to the middle of the darkness axis — no matter
+    the genre. The root note and the emotional weight stay put while everything
+    else (tempo feel, energy, instrumentation, language) changes around them.
+  </blockquote>
+  <p>
+    That is a real, falsifiable signature: <strong>the same hand and the same mood
+    underneath deliberately different clothes.</strong> The breadth of genre is the
+    performance; the constancy of E and of mid-darkness is the person doing it.
+  </p>
+  <div class="mt-callout">
+    <span class="tag">A hypothesis, not a finding</span>
+    The lyrical "swerve" — set up, then undercut — has a plausible musical cousin
+    in the energy/darkness split: songs that are energetic <em>and</em> dark
+    (<span class="mt-trackname">Nemesis</span> E0.6/D0.7,
+    <span class="mt-trackname">Opportunities…</span> E0.7/D0.75,
+    <span class="mt-trackname">Sometimes</span> E0.8/D0.7) — a bright surface over
+    a heavy centre. Offered as a hypothesis only; it would need an audio pass to
+    confirm.
+  </div>
+
+  <!-- 5 -->
+  <div><span class="mt-num">05</span></div>
+  <h2 class="mt-h2">How he writes — inferred process</h2>
+  <p>
+    The demo-to-full-band families are the key evidence. Three songs exist in
+    multiple versions, and what changes — and what doesn't — is revealing.
+  </p>
+  <table class="mt-tbl">
+    <tr><th>Song family</th><th>Stays fixed</th><th>Moves</th></tr>
+    <tr><td><span class="mt-trackname">Eendag</span> · demo→alt→full</td><td>E minor, energy 0.3</td><td>only darkness (0.2→0.5→0.4)</td></tr>
+    <tr><td><span class="mt-trackname">Laat dit rus</span> · 1→full</td><td>F minor, 129 BPM</td><td>darkness rises with production (0.4→0.6)</td></tr>
+    <tr><td><span class="mt-trackname">Aisle Seat</span> · orig→Mix 1</td><td>D# major</td><td>tempo eases, energy drops</td></tr>
+  </table>
+  <blockquote class="mt-q">
+    Key and tempo stabilise at the demo stage and barely move thereafter. Energy
+    and darkness are the production variables — what arrangement and mixing
+    actually change.
+  </blockquote>
+  <p>
+    That is exactly the profile of a <strong>guitarist who demos a song in its
+    final key (usually E), at its final pulse, alone — and then layers the band,
+    the distortion, the space on top without touching the harmonic or rhythmic
+    skeleton.</strong> The song is <em>written</em> on the guitar; it is
+    <em>arranged</em> in the room, and you can see the seam between the two stages
+    in the numbers. The seven "movements" reinforce this: they are
+    arrangement-and-genre categories (voice+guitar / full band / instrumental /
+    drone / covers / workshop / Afrikaans), not harmonic ones — which is why E
+    bleeds across six of them. The movements describe <em>how a song was dressed</em>,
+    not how it was conceived.
+  </p>
+
+  <!-- limits -->
+  <div class="mt-limits">
+    <h2 class="mt-h2" style="margin-top:0">Limits — what this can and cannot claim</h2>
+    <ul>
+      <li><strong>Inferred from measured <em>metadata</em> plus four models' reading
+        — not from re-listening to 78 waveforms.</strong> Key, tempo, energy and
+        darkness are summary numbers; they do not contain the actual notes, chord
+        progressions, melodic contours, or production detail.</li>
+      <li><strong>Tempo carries a known artefact.</strong> librosa is prone to
+        octave errors (half- or double-time). The 172 BPM ceiling is very likely a
+        half-time mis-count of an ~86 pulse — treat the measured range as wider
+        than the felt range.</li>
+      <li><strong>Energy and darkness are model-assigned 0–1 scores, not physical
+        units.</strong> Consistent enough to compare tracks against each other, but
+        the absolute values (and the darkness midline) are a measurement convention,
+        not ground truth.</li>
+      <li><strong>The strongest unfalsifiable-from-this-data claims were
+        deliberately withheld.</strong> "Melodic instinct" and the musical "swerve"
+        live in the audio, not the metadata — flagged as hypotheses, not findings.</li>
+    </ul>
+    <p style="margin-top:16px;font-size:13.5px;color:#d8d2c8">
+      <strong>What a deeper audio-DSP pass would add:</strong> chord-progression
+      extraction (does a recurring I–IV–V reinforce the E-centre?), melodic-contour
+      analysis (a genuine melodic signature?), beat-tracking with octave-error
+      correction (settle the 172 question), spectral/timbre analysis (the actual
+      <em>sound</em> of his guitar and voice, the grain of The Dark Room), and
+      structural dynamics across each song's timeline (test the "swerve" — does the
+      music set up and undercut, section by section?). Those would turn the
+      defensible harmonic fingerprint here into a full musical portrait.
+    </p>
+  </div>
+
+  <p class="mt-foot">Four models, one conclusion — openly disagreed and resolved
+    where they differed. The thread is E, and the middle of the dark.</p>
+
+</div>
+</section>
+</body></html>
