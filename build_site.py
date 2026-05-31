@@ -56,18 +56,33 @@ FEELINGS = [
 
 
 def copy_audio(records: list, out_dir: Path) -> None:
-    """Copy each song's source file into <out>/audio/<id><ext>; set rec['audio']."""
+    """Stage each song's audio under <out>/audio/<id><ext> and set rec['audio'].
+
+    Three cases, in order:
+      1. rec['file'] points at a readable source -> copy it in (the build-from-
+         source path);
+      2. no 'file' (or unreadable) but rec already carries a relative 'audio'
+         path that exists in this repo -> keep it (rebuild-from-catalogue path,
+         audio already committed);
+      3. neither -> rec['audio']=None; the card still renders without playback.
+    A machine-local 'file' path is never inlined into the page (popped below).
+    """
     audio_dir = out_dir / "audio"
     audio_dir.mkdir(parents=True, exist_ok=True)
     for r in records:
-        src = Path(r["file"])
-        ext = src.suffix.lower()
-        dst = audio_dir / f"{r['id']}{ext}"
-        try:
-            shutil.copyfile(src, dst)
-            r["audio"] = f"audio/{r['id']}{ext}"
-        except OSError:
-            r["audio"] = None  # playback unavailable for this track; card still renders
+        src = Path(r["file"]) if r.get("file") else None
+        if src and src.is_file():
+            dst = audio_dir / f"{r['id']}{src.suffix.lower()}"
+            try:
+                shutil.copyfile(src, dst)
+                r["audio"] = f"audio/{r['id']}{src.suffix.lower()}"
+            except OSError:
+                r["audio"] = None
+        elif r.get("audio"):
+            pass  # already-committed repo audio (audio/<id>.<ext>) — keep as-is
+        else:
+            r["audio"] = None  # no playable source; card still renders
+        r.pop("file", None)  # never leak a build-machine path into the page
 
 
 def html(records: list) -> str:
@@ -147,6 +162,18 @@ def html(records: list) -> str:
   .card .one {{ font-size:13.5px; margin:0 0 8px; }}
   .card .lyric {{ font-family:Georgia,serif; font-style:italic; color:var(--garnet); font-size:13px;
     border-left:2px solid var(--garnet-soft); padding-left:9px; margin:0 0 10px; }}
+  /* Mechanical floor (librosa): tempo + musical key, measured not guessed. */
+  .card .floor {{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 9px; }}
+  .card .floor .chip {{ font-size:10.5px; letter-spacing:.4px; color:var(--charcoal);
+    background:#f3eee6; border:1px solid var(--rule); border-radius:20px; padding:2px 9px; }}
+  .card .floor .chip b {{ color:var(--garnet); font-weight:700; }}
+  /* Transcribed lyrics (Vulavula STT) — collapsible, provenance-stamped. */
+  .card details.lyrics {{ margin:0 0 10px; }}
+  .card details.lyrics summary {{ cursor:pointer; font-size:11px; letter-spacing:.5px;
+    text-transform:uppercase; color:var(--garnet); font-weight:700; }}
+  .card details.lyrics .body {{ white-space:pre-wrap; font-size:12.5px; color:var(--ink);
+    line-height:1.5; margin:7px 0 0; max-height:220px; overflow:auto; }}
+  .card details.lyrics .prov {{ font-size:10px; color:var(--muted); font-style:italic; margin-top:5px; }}
   .card audio {{ width:100%; height:34px; }}
   footer {{ color:var(--muted); font-size:12.5px; padding:40px 0 60px; text-align:center; }}
   footer .caveat {{ font-style:italic; max-width:680px; margin:8px auto 0; }}
@@ -186,7 +213,7 @@ def html(records: list) -> str:
 
 <footer><div class="wrap">
   Heard in full via <strong>grip-hear</strong> · audio &rarr; Gemini multimodal &rarr; structured hearing
-  <div class="caveat">Each placement and impression is grounded in what the model actually heard in that recording. Lyrics are approximate. Playback uses the audio files in this repository.</div>
+  <div class="caveat">Each placement and impression is grounded in what the model actually heard. Tempo and musical key are measured deterministically with librosa, not guessed. Where shown, lyrics are transcribed via Vulavula speech-to-text; the model's guessed line is the pull-quote. Playback uses the audio files in this repository.</div>
 </div></footer>
 
 <script>
@@ -221,7 +248,10 @@ function renderField() {{
   wrap.querySelectorAll(".dot").forEach(dot => {{
     const r = CATALOGUE[+dot.dataset.i];
     dot.addEventListener("mousemove", ev => {{
-      tip.innerHTML = `<div class="t">${{esc(r.title)}}</div><div>${{esc(r.one_line||"")}}</div>` +
+      const floor = [r.tempo_bpm? Math.round(r.tempo_bpm)+" BPM":"", fmtKey(r)].filter(Boolean).join(" · ");
+      tip.innerHTML = `<div class="t">${{esc(r.title)}}</div>` +
+        (floor ? `<div style="color:#cdbac1;font-size:11px;margin:2px 0">${{floor}}</div>` : "") +
+        `<div>${{esc(r.one_line||"")}}</div>` +
         (r.key_lyric ? `<div class="l">&ldquo;${{esc(r.key_lyric)}}&rdquo;</div>` : "");
       const b = wrap.getBoundingClientRect();
       tip.style.left = Math.min(ev.clientX-b.left+14, b.width-290)+"px";
@@ -251,6 +281,22 @@ function renderFeelings() {{
 }}
 
 /* ---------- Catalogue cards ---------- */
+function fmtKey(r) {{ return r.key ? esc(r.key) + (r.mode ? " " + esc(r.mode) : "") : ""; }}
+function floorHTML(r) {{
+  // librosa-measured tempo/key — only rendered when the mechanical floor ran.
+  const chips = [];
+  if (r.tempo_bpm) chips.push(`<span class="chip"><b>${{Math.round(r.tempo_bpm)}}</b> BPM</span>`);
+  if (r.key) chips.push(`<span class="chip">key <b>${{fmtKey(r)}}</b></span>`);
+  return chips.length ? `<div class="floor" title="Measured by librosa, not guessed">${{chips.join("")}}</div>` : "";
+}}
+function lyricsHTML(r) {{
+  // Real transcribed lyrics (Vulavula). key_lyric (the model's guess) still
+  // shows above as the pull-quote; this is the full, provenance-stamped text.
+  if (r.lyrics_source !== "vulavula" || !r.lyrics) return "";
+  return `<details class="lyrics"><summary>Lyrics</summary>`+
+    `<div class="body">${{esc(r.lyrics)}}</div>`+
+    `<div class="prov">Transcribed via Vulavula${{r.lyrics_lang? " ("+esc(r.lyrics_lang)+")":""}}</div></details>`;
+}}
 function cardHTML(r) {{
   const tags = [r.genre, Array.isArray(r.mood)? r.mood.join(", "): r.mood, r.instrumental? "instrumental": (r.language||"")]
     .filter(Boolean).join(" · ");
@@ -259,8 +305,10 @@ function cardHTML(r) {{
   return `<div class="card" id="song-${{r.id}}">
     <h4>${{esc(r.title)}}</h4>
     <div class="tags">${{esc(tags)}}</div>
+    ${{floorHTML(r)}}
     <div class="one">${{esc(r.one_line||"")}}</div>
     ${{r.key_lyric ? `<div class="lyric">&ldquo;${{esc(r.key_lyric)}}&rdquo;</div>`:""}}
+    ${{lyricsHTML(r)}}
     ${{audio}}
   </div>`;
 }}
