@@ -1,0 +1,5 @@
+# grip-hear runs on the Python standard library alone (urllib for HTTP).
+# Nothing is required to hear a track or build the catalogue and site.
+#
+# Optional — uncomment to add deterministic tempo/key detection (roadmap):
+# librosa>=0.10
