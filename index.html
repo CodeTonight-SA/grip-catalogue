@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GRIP Hears — The Catalogue</title>
+<style>
+  :root {
+    --ink:#23232a; --cream:#faf8f4; --charcoal:#1a1a1e; --garnet:#8a2846;
+    --garnet-soft:#b0667d; --rule:#e4ded4; --muted:#6b6760;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--cream); color:var(--ink);
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; line-height:1.55; }
+  h1,h2,h3 { font-family:Georgia,'Times New Roman',serif; font-weight:700; }
+  a { color:var(--garnet); }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 22px; }
+
+  /* Overture */
+  .overture { background:var(--charcoal); color:var(--cream); padding:64px 0 56px; position:relative; overflow:hidden; }
+  .overture::after { content:""; position:absolute; top:-160px; right:-160px; width:420px; height:420px;
+    border-radius:50%; background:repeating-radial-gradient(circle at center, transparent 0 10px, rgba(176,102,125,.14) 10px 11px); }
+  .overture .kicker { font-family:Georgia,serif; letter-spacing:5px; text-transform:uppercase;
+    color:var(--garnet-soft); font-size:13px; margin:0; }
+  .overture h1 { font-size:60px; line-height:1.02; margin:10px 0 0; letter-spacing:-.5px; }
+  .overture .thesis { font-family:Georgia,serif; font-style:italic; font-size:20px; color:#d8d2c8;
+    max-width:760px; margin:22px 0 0; }
+  .numbers { display:flex; gap:34px; margin:30px 0 0; flex-wrap:wrap; }
+  .numbers .n .big { font-family:Georgia,serif; font-size:34px; color:var(--garnet-soft); display:block; line-height:1; }
+  .numbers .n .lab { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#9a948a; }
+
+  section.block { padding:48px 0 8px; }
+  section.block > .wrap > h2 { font-size:30px; color:var(--charcoal); margin:0 0 4px;
+    border-bottom:2px solid var(--garnet); display:inline-block; padding-bottom:6px; }
+  .sublede { color:var(--muted); font-family:Georgia,serif; font-style:italic; margin:8px 0 22px; }
+
+  /* Field map */
+  #fieldWrap { position:relative; background:#fff; border:1px solid var(--rule); border-radius:10px; padding:10px; }
+  svg { width:100%; height:auto; display:block; }
+  .axis-label { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; fill:var(--muted); font-family:-apple-system,sans-serif; }
+  .dot { cursor:pointer; transition:r .12s; }
+  .dot:hover { stroke:#1a1a1e; stroke-width:1.5; }
+  .legend { display:flex; gap:18px; flex-wrap:wrap; margin:14px 2px 0; font-size:12.5px; color:var(--muted); }
+  .legend .sw { display:inline-block; width:11px; height:11px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+  #tip { position:absolute; pointer-events:none; background:var(--charcoal); color:var(--cream);
+    padding:9px 12px; border-radius:8px; font-size:12.5px; max-width:280px; opacity:0; transition:opacity .12s; z-index:5; }
+  #tip .t { font-weight:700; font-family:Georgia,serif; }
+  #tip .l { color:var(--garnet-soft); font-style:italic; margin-top:3px; }
+
+  /* Finder */
+  .feelings { display:flex; flex-wrap:wrap; gap:10px; margin:0 0 18px; }
+  .feelings button { font:inherit; font-size:14px; padding:9px 15px; border:1px solid var(--garnet);
+    background:#fff; color:var(--garnet); border-radius:22px; cursor:pointer; }
+  .feelings button:hover, .feelings button[aria-pressed="true"] { background:var(--garnet); color:#fff; }
+  #finderOut { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; }
+
+  /* Cards */
+  .movement-head { margin:34px 0 4px; }
+  .movement-head .mnum { font-family:Georgia,serif; letter-spacing:3px; text-transform:uppercase; font-size:12px; }
+  .movement-head h3 { font-size:23px; margin:2px 0 2px; color:var(--charcoal); }
+  .movement-head .mb { color:var(--muted); font-family:Georgia,serif; font-style:italic; margin:0 0 14px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; }
+  .card { border:1px solid var(--rule); border-left:4px solid var(--garnet); border-radius:9px;
+    background:#fff; padding:15px 16px; }
+  .card h4 { margin:0 0 3px; font-family:Georgia,serif; font-size:17px; color:var(--charcoal); }
+  .card .tags { font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--garnet); font-weight:700; margin:0 0 8px; }
+  .card .one { font-size:13.5px; margin:0 0 8px; }
+  .card .lyric { font-family:Georgia,serif; font-style:italic; color:var(--garnet); font-size:13px;
+    border-left:2px solid var(--garnet-soft); padding-left:9px; margin:0 0 10px; }
+  .card audio { width:100%; height:34px; }
+  footer { color:var(--muted); font-size:12.5px; padding:40px 0 60px; text-align:center; }
+  footer .caveat { font-style:italic; max-width:680px; margin:8px auto 0; }
+</style></head>
+<body>
+<header class="overture"><div class="wrap">
+  <p class="kicker">GRIP Hears · A Listening Instrument</p>
+  <h1>The Catalogue</h1>
+  <p class="thesis">Forty-four songs by Laurie Scheepers, heard by the machine he built — and turned into something you can play, map, and search by how you feel. Twenty years of songs circle one thing: the overactive mind, and the connection that might quiet it.</p>
+  <div class="numbers">
+    <div class="n"><span class="big">44</span><span class="lab">Songs</span></div>
+    <div class="n"><span class="big">5</span><span class="lab">Movements</span></div>
+    <div class="n"><span class="big">10</span><span class="lab">Instrumental</span></div>
+    <div class="n"><span class="big">3</span><span class="lab">In Afrikaans</span></div>
+  </div>
+</div></header>
+
+<section class="block"><div class="wrap">
+  <h2>The Emotional Field</h2>
+  <p class="sublede">Every song placed by what GRIP heard in it — left&rarr;right is stillness&rarr;intensity, bottom&rarr;top is light&rarr;dark. Hover to read; click to play.</p>
+  <div id="fieldWrap"><div id="tip"></div></div>
+  <div class="legend" id="legend"></div>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <h2>How are you feeling?</h2>
+  <p class="sublede">Pick a feeling — GRIP surfaces the songs from this catalogue that meet you there.</p>
+  <div class="feelings" id="feelings"></div>
+  <div id="finderOut"></div>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <h2>The Catalogue</h2>
+  <p class="sublede">All 44 songs, in five movements. Each as GRIP heard it.</p>
+  <div id="catalogue"></div>
+</div></section>
+
+<footer><div class="wrap">
+  Heard in full via <strong>grip-hear</strong> · GRIP multimodal audio · 2026
+  <div class="caveat">Each placement and impression is grounded in what GRIP actually heard in that recording. Afrikaans lyrics are approximate. Playback uses your local audio files.</div>
+</div></footer>
+
+<script>
+const CATALOGUE = [{"id": "aisle-seat", "title": "Aisle Seat", "movement": "The Confessionals", "genre": "Acoustic Folk", "mood": "Melancholy, reflective, uncertain, somber", "language": "English", "instrumental": false, "key_lyric": "What if I can be your friend", "energy": 0.4, "darkness": 0.7, "one_line": "A melancholic acoustic folk song features a male vocalist pondering uncertainty and the potential end of a relationship, accompanied by intricate fingerpicking guitar.", "audio": "audio/aisle-seat.mp3"}, {"id": "another-thought", "title": "Another Thought", "movement": "The Confessionals", "genre": "Folk Acoustic", "mood": "Reflective, Nostalgic, Melancholic, Uncertain", "language": "English", "instrumental": false, "key_lyric": "Now what am I to do", "energy": 0.3, "darkness": 0.4, "one_line": "A reflective acoustic folk song contemplates past memories and an uncertain future with soft vocals and gentle strumming.", "audio": "audio/another-thought.mp3"}, {"id": "dirt-poor-genius", "title": "Dirt Poor Genius", "movement": "The Confessionals", "genre": "Acoustic Folk", "mood": "melancholy, humble, cynical, narrative", "language": "English", "instrumental": false, "key_lyric": "I'm a dirt poor genius", "energy": 0.4, "darkness": 0.6, "one_line": "A male vocalist sings a melancholic folk song about being an unappreciated \"dirt poor genius\" who struggles financially despite his talents, accompanied by ukulele and guitar.", "audio": "audio/dirt-poor-genius.mp3"}, {"id": "faith-in-the-human-race", "title": "Faith In the Human Race", "movement": "The Confessionals", "genre": "Acoustic folk", "mood": "Mellow, thoughtful, questioning, melancholic", "language": "English", "instrumental": false, "key_lyric": "Trying to constantly prove that you have faith in the human race", "energy": 0.35, "darkness": 0.55, "one_line": "A contemplative acoustic folk track with a gentle male vocal reflecting on the complexities of faith in humanity.", "audio": "audio/faith-in-the-human-race.m4a"}, {"id": "for-a-while", "title": "For a While", "movement": "The Confessionals", "genre": "folk rock", "mood": ["acoustic", "melancholy", "reflective"], "language": "English", "instrumental": false, "key_lyric": "Wondering about it all today", "energy": 0.4, "darkness": 0.6, "one_line": "A male vocalist sings a melancholic folk-rock song with a prominent acoustic guitar and gentle percussion, exploring themes of time passing, uncertainty, and internal struggle.", "audio": "audio/for-a-while.mp3"}, {"id": "happiness-that-s-broke", "title": "Happiness That's Broke", "movement": "The Confessionals", "genre": "Indie Folk", "mood": "melancholy, reflective, wistful, sad", "language": "English", "instrumental": false, "key_lyric": "So much sadness and all, so much happiness that's broke.", "energy": 0.3, "darkness": 0.7, "one_line": "A somber male voice sings reflective lyrics over a gently fingerpicked acoustic guitar, exploring themes of sadness, broken happiness, and regret.", "audio": "audio/happiness-that-s-broke.mp3"}, {"id": "i-woke-up-this-morning", "title": "I woke up this morning", "movement": "The Confessionals", "genre": "Acoustic Folk", "mood": "reflective, melancholic, tender, longing", "language": "English", "instrumental": false, "key_lyric": "But I'll just keep on mourning the loss I never had", "energy": 0.3, "darkness": 0.65, "one_line": "A tender male voice sings a melancholic folk ballad about finding solace in thought amidst an unidentifiable grief, accompanied by a gently fingerpicked acoustic guitar.", "audio": "audio/i-woke-up-this-morning.mp3"}, {"id": "i-m-feeling-good", "title": "I'm Feeling Good", "movement": "The Confessionals", "genre": "Acoustic Folk", "mood": "Mellow, introspective, grateful, hopeful", "language": "English", "instrumental": false, "key_lyric": "And it's all thanks to you", "energy": 0.4, "darkness": 0.3, "one_line": "A tranquil acoustic folk song features a male vocalist reflecting on personal resilience and gratitude over gentle guitar strumming.", "audio": "audio/i-m-feeling-good.mp3"}, {"id": "just-fine", "title": "Just Fine", "movement": "The Confessionals", "genre": "alternative rock", "mood": ["somber", "reflective", "isolated", "mellow"], "language": "English", "instrumental": false, "key_lyric": "Leave me all alone", "energy": 0.3, "darkness": 0.6, "one_line": "A melancholic alternative rock song featuring male vocals and a clean guitar melody, expressing themes of isolation and introspection with a gradual build in intensity.", "audio": "audio/just-fine.mp3"}, {"id": "kry-kontrole", "title": "Kry Kontrole", "movement": "The Confessionals", "genre": "Folk", "mood": "introspective, earnest, reflective, mellow", "language": "Afrikaans", "instrumental": false, "key_lyric": "Eens gebore, nou verlore, nou bewoë", "energy": 0.35, "darkness": 0.45, "one_line": "An introspective Afrikaans folk song featuring acoustic guitar and earnest male vocals, exploring themes of control, loss, and the journey of life.", "audio": "audio/kry-kontrole.mp3"}, {"id": "legacy", "title": "Legacy", "movement": "The Confessionals", "genre": "folk rock", "mood": ["acoustic", "melancholy", "hopeful"], "language": "English", "instrumental": false, "key_lyric": "One day I'll be just like you", "energy": 0.3, "darkness": 0.4, "one_line": "A gentle folk rock song with a male vocalist sings about hope and legacy, accompanied by acoustic guitar and subtle percussion.", "audio": "audio/legacy.mp3"}, {"id": "mia-s-song-from-me", "title": "Mia's song from me", "movement": "The Confessionals", "genre": "folk", "mood": ["somber", "melancholy", "reflective"], "language": "English", "instrumental": false, "key_lyric": "Yes, I know you've been struggling to know", "energy": 0.2, "darkness": 0.7, "one_line": "A melancholic folk song features a male vocalist and gentle acoustic guitar, with the addition of a harmonica solo that enhances the wistful and somber mood.", "audio": "audio/mia-s-song-from-me.mp3"}, {"id": "one-day", "title": "One Day", "movement": "The Confessionals", "genre": "Acoustic Folk", "mood": "melancholy, hopeful, tender, yearning", "language": "English", "instrumental": false, "key_lyric": "One day, I'll be there waiting for you", "energy": 0.3, "darkness": 0.4, "one_line": "A tender male vocal sings a melancholic yet hopeful folk tune about patiently waiting for a loved one, accompanied by acoustic guitar, bass, and accordion.", "audio": "audio/one-day.mp3"}, {"id": "realize", "title": "Realize", "movement": "The Confessionals", "genre": "Folk", "mood": "Reflective, melancholic, somber, poignant", "language": "English", "instrumental": false, "key_lyric": "It's just a normal day, people going their own way", "energy": 0.4, "darkness": 0.6, "one_line": "A reflective acoustic folk song featuring a melancholic male voice contemplating the silent anxieties and struggles hidden within ordinary life.", "audio": "audio/realize.mp3"}, {"id": "reconnected", "title": "Reconnected", "movement": "The Confessionals", "genre": "Acoustic Folk", "mood": "melancholy, reflective, introspective, wistful", "language": "English", "instrumental": false, "key_lyric": "It seems to work slow, it seems to work fast time", "energy": 0.4, "darkness": 0.6, "one_line": "A male vocalist delivers a melancholic acoustic folk narrative, reflecting on lost connections and the passage of time over intricate guitar melodies.", "audio": "audio/reconnected.mp3"}, {"id": "scare-off-the-devils", "title": "Scare off the devils", "movement": "The Confessionals", "genre": "Folk Rock", "mood": "Melancholic, hopeful, gentle", "language": "English", "instrumental": false, "key_lyric": "When you're ready, just come to me", "energy": 0.4, "darkness": 0.5, "one_line": "A tender male voice sings an acoustic folk-rock song offering comfort and encouragement to someone facing life's challenges.", "audio": "audio/scare-off-the-devils.mp3"}, {"id": "singing-along", "title": "Singing Along", "movement": "The Confessionals", "genre": "Acoustic Folk", "mood": "Reflective, Calm, Intimate, Melancholic", "language": "English", "instrumental": false, "key_lyric": "What else would I do if it weren't for you to pull me through", "energy": 0.2, "darkness": 0.35, "one_line": "A male vocalist delivers a tender and reflective acoustic folk song, accompanied by simple, gentle guitar picking.", "audio": "audio/singing-along.mp3"}, {"id": "the-place", "title": "The Place", "movement": "The Confessionals", "genre": "Acoustic folk", "mood": "melancholic, introspective, mysterious, gentle", "language": "English", "instrumental": false, "key_lyric": "Memories and future thoughts are gone", "energy": 0.35, "darkness": 0.7, "one_line": "A haunting acoustic folk song explores a mysterious, desolate place where past and future thoughts are lost to a melancholic solitude.", "audio": "audio/the-place.mp3"}, {"id": "too-much-in-my-mind", "title": "Too Much In My Mind", "movement": "The Confessionals", "genre": "acoustic indie folk", "mood": ["thoughtful", "melancholy", "dreamy", "introspective"], "language": "English", "instrumental": false, "key_lyric": "I am too much in my mind", "energy": 0.3, "darkness": 0.4, "one_line": "A reflective male vocalist sings over a gently strummed acoustic guitar, exploring themes of overthinking and self-reflection in a melancholic indie folk style.", "audio": "audio/too-much-in-my-mind.mp3"}, {"id": "wait-until-i-feel-good", "title": "Wait until I feel good", "movement": "The Confessionals", "genre": "Blues", "mood": ["melancholy", "resigned", "somber"], "language": "English", "instrumental": false, "key_lyric": "Once there were some blues that I could not refuse", "energy": 0.3, "darkness": 0.7, "one_line": "A melancholic male voice sings over a bluesy acoustic guitar, with a slide guitar adding a mournful counter-melody.", "audio": "audio/wait-until-i-feel-good.mp3"}, {"id": "ek-is-die-een-wat-omgee", "title": "Ek Is Die Een Wat Omgee", "movement": "The Band", "genre": "Afrikaans rock", "mood": "energetic, determined, hopeful", "language": "Afrikaans", "instrumental": false, "key_lyric": "Ek gee dit als verniet weg", "energy": 0.8, "darkness": 0.4, "one_line": "A driving rock song with male vocals in Afrikaans, featuring a powerful electric guitar riff and a determined, hopeful message about overcoming challenges and giving everything for free.", "audio": "audio/ek-is-die-een-wat-omgee.mp3"}, {"id": "freetown-marlon-brando", "title": "Freetown - Marlon Brando", "movement": "The Band", "genre": "alternative rock", "mood": ["melancholic", "reflective", "introspective"], "language": "English", "instrumental": false, "key_lyric": "You pull it too many times", "energy": 0.5, "darkness": 0.6, "one_line": "A melancholic alternative rock song with a strong build-up and male vocals, featuring a slow, reflective intro that transitions into a more energized, emotional chorus with a powerful guitar solo.", "audio": "audio/freetown-marlon-brando.mp3"}, {"id": "freetown-must-be-a-way", "title": "Freetown - Must be a way", "movement": "The Band", "genre": "alternative rock", "mood": ["energetic", "angsty", "introspective", "driving"], "language": "English", "instrumental": false, "key_lyric": "I know I deserve to dream my every freaking dream", "energy": 0.8, "darkness": 0.6, "one_line": "This song features a driving alternative rock sound with angsty male vocals and a powerful chorus, emphasizing themes of resilience and the right to dream amidst challenging circumstances.", "audio": "audio/freetown-must-be-a-way.m4a"}, {"id": "freetown-psychological-warfare", "title": "Freetown - Psychological Warfare", "movement": "The Band", "genre": "Alternative Rock", "mood": "Angsty, melancholic, defiant, driving", "language": "English", "instrumental": false, "key_lyric": "You say just an affair, I say love in despair, it was psychological warfare.", "energy": 0.75, "darkness": 0.65, "one_line": "A driving alternative rock track with angsty male vocals expressing defiance and despair against manipulation, centered on a lingering, lost love.", "audio": "audio/freetown-psychological-warfare.m4a"}, {"id": "loneliness", "title": "Loneliness", "movement": "The Band", "genre": "folk rock", "mood": ["somber", "thoughtful", "melancholy"], "language": "English", "instrumental": false, "key_lyric": "What do you do when you get lonely, what do you do when you feel sad?", "energy": 0.3, "darkness": 0.6, "one_line": "A melancholic male voice sings over a simple acoustic guitar and bass, posing questions about loneliness and sadness.", "audio": "audio/loneliness.mp3"}, {"id": "nemesis", "title": "Nemesis", "movement": "The Band", "genre": "Indie Rock", "mood": "anxious, raw, melancholic, earnest", "language": "English", "instrumental": false, "key_lyric": "Why can't you see this through?", "energy": 0.6, "darkness": 0.7, "one_line": "A raw and melancholic indie rock song features male vocals grappling with a persistent nemesis, pleading for resolution.", "audio": "audio/nemesis.mp3"}, {"id": "ongemaklike-situasies", "title": "Ongemaklike Situasies", "movement": "The Band", "genre": "alternative rock", "mood": ["energetic", "melancholy", "driving", "powerful"], "language": "Afrikaans", "instrumental": false, "key_lyric": "Ek het gedink ek sal vanish en ek het net gesê okay", "energy": 0.7, "darkness": 0.6, "one_line": "This track features a driving alternative rock sound with a steady beat, layered with a male vocal in Afrikaans and a powerful electric guitar solo, creating a melancholy yet energetic atmosphere.", "audio": "audio/ongemaklike-situasies.mp3"}, {"id": "opportunities-and-what-happens-to-them", "title": "Opportunities and what happens to them", "movement": "The Band", "genre": "Stoner Rock", "mood": "heavy, melancholic, introspective, driving", "language": "English", "instrumental": false, "key_lyric": "In some this opportunity is coming my way", "energy": 0.7, "darkness": 0.75, "one_line": "A driving stoner rock track features heavily distorted guitars, a solid rhythm section, and melancholic English vocals reflecting on past hopes and future opportunities.", "audio": "audio/opportunities-and-what-happens-to-them.mp3"}, {"id": "you-see", "title": "You see", "movement": "The Band", "genre": "alternative rock", "mood": ["somber", "brooding", "melancholic", "introspective"], "language": "English", "instrumental": false, "key_lyric": "It's sad to know this fall and know we have to fall", "energy": 0.35, "darkness": 0.65, "one_line": "A melancholic male vocal sings with a sense of resignation over a brooding alternative rock arrangement featuring a clean electric guitar, bass, and drums.", "audio": "audio/you-see.mp3"}, {"id": "broken-ring-finger", "title": "Broken Ring Finger", "movement": "Without Words", "genre": "Traditional folk", "mood": "Haunting, contemplative, spacious, melancholic", "language": "instrumental", "instrumental": true, "key_lyric": null, "energy": 0.3, "darkness": 0.6, "one_line": "A slow, spacious, and haunting acoustic guitar melody with a melancholic feel, gradually building in intensity and introducing other stringed instruments towards the end.", "audio": "audio/broken-ring-finger.mp3"}, {"id": "moving-on-up", "title": "Moving on up", "movement": "Without Words", "genre": "jazz fusion", "mood": ["groovy", "mellow", "relaxed", "jazzy"], "language": "instrumental", "instrumental": true, "key_lyric": null, "energy": 0.3, "darkness": 0.2, "one_line": "This is a mellow and groovy jazz fusion track with a relaxed and jazzy feel, featuring a clean electric guitar melody and a solid rhythm section.", "audio": "audio/moving-on-up.mp3"}, {"id": "sometimes", "title": "Sometimes", "movement": "Without Words", "genre": "Progressive Metal", "mood": "calm, epic, powerful, intense", "language": "instrumental", "instrumental": true, "key_lyric": null, "energy": 0.8, "darkness": 0.7, "one_line": "A dynamic instrumental track that begins with clean, atmospheric guitar arpeggios before building into a powerful, distorted progressive metal soundscape.", "audio": "audio/sometimes.mp3"}, {"id": "that-s-how-i-wanna-go", "title": "That's How I Wanna Go", "movement": "Without Words", "genre": "Blues", "mood": "melancholic, weary, contemplative", "language": "English", "instrumental": false, "key_lyric": "That's how I wanna go", "energy": 0.3, "darkness": 0.65, "one_line": "A male vocalist sings a melancholic blues tune about dying dreams and how he wants to go, accompanied by a clean electric guitar with heavy tremolo and some harmonica.", "audio": "audio/that-s-how-i-wanna-go.m4a"}, {"id": "the-black-sheep", "title": "The Black Sheep", "movement": "Without Words", "genre": "rock", "mood": "energetic, distorted, bluesy, playful", "language": "instrumental", "instrumental": true, "key_lyric": null, "energy": 0.8, "darkness": 0.3, "one_line": "A high-energy, distorted rock track with a bluesy and playful feel, featuring a dominant electric guitar with whammy bar effects, backed by a driving drum beat and bass.", "audio": "audio/the-black-sheep.m4a"}, {"id": "tigrrr-s-song", "title": "Tigrrr's Song", "movement": "Without Words", "genre": "Acoustic Blues/Jazz", "mood": "Mellow, reflective, skillful, laid-back", "language": "instrumental", "instrumental": true, "key_lyric": null, "energy": 0.35, "darkness": 0.4, "one_line": "A mellow acoustic guitar solo featuring bluesy licks and jazz-infused melodies with a reflective feel.", "audio": "audio/tigrrr-s-song.mp3"}, {"id": "wave-to-frank", "title": "Wave to Frank", "movement": "Without Words", "genre": "rock", "mood": "dynamic, melancholic, reflective", "language": "instrumental", "instrumental": true, "key_lyric": null, "energy": 0.65, "darkness": 0.45, "one_line": "A melancholic electric guitar melody builds dynamically with rock drum beats and a pulsing bassline into an expressive, slightly bluesy rock instrumental.", "audio": "audio/wave-to-frank.mp3"}, {"id": "fuck-everything", "title": "Fuck Everything", "movement": "The Dark Room", "genre": "electronic music", "mood": ["chaotic", "experimental", "noisy"], "language": "instrumental", "instrumental": true, "key_lyric": null, "energy": 0.8, "darkness": 0.9, "one_line": "A cacophony of distorted electronic sounds, reminiscent of a malfunctioning robot orchestra, creates a chaotic and unsettling sonic landscape with an industrial edge.", "audio": "audio/fuck-everything.mp3"}, {"id": "it-s-time", "title": "It's time", "movement": "The Dark Room", "genre": "dark ambient", "mood": ["ominous", "eerie", "dramatic", "suspenseful"], "language": "instrumental", "instrumental": true, "key_lyric": null, "energy": 0.3, "darkness": 0.8, "one_line": "A sinister and drawn-out drone with occasional high-pitched swells creates a truly unsettling atmosphere perfect for horror or suspense.", "audio": "audio/it-s-time.mp3"}, {"id": "the-mood-stabilizing-depressant-circus", "title": "The Mood Stabilizing Depressant Circus", "movement": "The Dark Room", "genre": "metal", "mood": ["dark", "intense", "chaotic", "aggressive"], "language": "instrumental", "instrumental": true, "key_lyric": null, "energy": 0.9, "darkness": 0.8, "one_line": "This track features chaotic, high-energy metal music with a dark and aggressive mood, characterized by fast-paced riffs, shredding solos, and a powerful drum beat, creating an intense and unsettling atmosphere.", "audio": "audio/the-mood-stabilizing-depressant-circus.mp3"}, {"id": "trip-to-the-circus", "title": "Trip to the Circus", "movement": "The Dark Room", "genre": "noise music", "mood": "harsh, abstract, eerie", "language": "instrumental", "instrumental": true, "key_lyric": null, "energy": 0.9, "darkness": 0.8, "one_line": "This track features experimental electronic noise with a harsh, high-pitched, and distorted soundscape, building in intensity and creating an unsettling, industrial atmosphere.", "audio": "audio/trip-to-the-circus.mp3"}, {"id": "golden-hair", "title": "Golden Hair", "movement": "Borrowed Voices", "genre": "Acoustic Folk", "mood": "melancholy, reflective, serene, gentle", "language": "English", "instrumental": false, "key_lyric": "Lean out your window, golden hair", "energy": 0.2, "darkness": 0.6, "one_line": "A gentle male voice sings a melancholic folk ballad, accompanied by sparse acoustic guitar picking.", "audio": "audio/golden-hair.mp3"}, {"id": "if-pink-floyd-cover", "title": "If (Pink Floyd Cover)", "movement": "Borrowed Voices", "genre": "Acoustic folk", "mood": "melancholy, reflective, wistful, gentle", "language": "English", "instrumental": false, "key_lyric": "If I were a good man, I'd talk to you more often than I can.", "energy": 0.2, "darkness": 0.6, "one_line": "A melancholic male voice reflects on regrets and possibilities, accompanied by tenderly plucked acoustic guitar.", "audio": "audio/if-pink-floyd-cover.mp3"}, {"id": "if-you-go-away", "title": "If You Go Away", "movement": "Borrowed Voices", "genre": "folk", "mood": ["somber", "melancholy", "heartfelt", "introspective"], "language": "English", "instrumental": false, "key_lyric": "If you go away on this summer day, then you might as well take the sun away.", "energy": 0.2, "darkness": 0.6, "one_line": "A somber folk song features a male vocalist and acoustic guitar, reflecting on the profound sadness of a loved one leaving, comparing their departure to the absence of the sun and the end of cherished memories.", "audio": "audio/if-you-go-away.mp3"}, {"id": "you-ve-got-to-hide-your-love-away", "title": "You've got to hide your love away", "movement": "Borrowed Voices", "genre": "Acoustic Folk", "mood": "melancholy, reflective, poignant, somber", "language": "English", "instrumental": false, "key_lyric": "Hey, you've got to hide your love away", "energy": 0.35, "darkness": 0.65, "one_line": "A melancholic male voice sings a folk song, accompanied by acoustic guitar, about the pain of having to hide one's love away from a judgmental world.", "audio": "audio/you-ve-got-to-hide-your-love-away.mp3"}];
+const FEELINGS = [{"key": "overwhelmed", "label": "Overwhelmed / too much in my mind", "e": 0.32, "d": 0.58}, {"key": "tender", "label": "Tender / in love", "e": 0.26, "d": 0.24}, {"key": "catharsis", "label": "I need to let it out", "e": 0.86, "d": 0.82}, {"key": "calm", "label": "I want to drift / be calm", "e": 0.2, "d": 0.4, "instrumental_bonus": true}, {"key": "heartbroken", "label": "Heartbroken", "e": 0.34, "d": 0.76}, {"key": "defiant", "label": "Defiant / fired up", "e": 0.8, "d": 0.5}];
+const COLOUR = {"The Confessionals": "#8a2846", "The Band": "#c2410c", "Without Words": "#0f766e", "The Dark Room": "#5b21b6", "Borrowed Voices": "#a16207"};
+const ORDER = ["The Confessionals", "The Band", "Without Words", "The Dark Room", "Borrowed Voices"];
+const BLURB = {"The Confessionals": "Voice and acoustic guitar — the crowded mind, and the connection it reaches for.", "The Band": "Drums, bass, distorted guitar — the louder declarations, and the doubts behind them.", "Without Words": "The instrumentals — where the guitar stops accompanying the voice and becomes it.", "The Dark Room": "Drone, industrial noise, dread — the far pole from the folk.", "Borrowed Voices": "Four covers — and a map of where this songwriting comes from."};
+const ROMAN = ["I","II","III","IV","V"];
+
+/* ---------- Emotional Field (SVG scatter) ---------- */
+function renderField() {
+  const W=920, H=560, pad=54;
+  const x = e => pad + e*(W-2*pad);
+  const y = d => (H-pad) - d*(H-2*pad);   // darkness up
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Emotional field map">`;
+  // grid + axes
+  s += `<rect x="${pad}" y="${pad}" width="${W-2*pad}" height="${H-2*pad}" fill="#fcfbf9" stroke="#eee7db"/>`;
+  for(let g=0.25; g<1; g+=0.25){
+    s += `<line x1="${x(g)}" y1="${pad}" x2="${x(g)}" y2="${H-pad}" stroke="#f0eadf"/>`;
+    s += `<line x1="${pad}" y1="${y(g)}" x2="${W-pad}" y2="${y(g)}" stroke="#f0eadf"/>`;
+  }
+  s += `<text class="axis-label" x="${W/2}" y="${H-18}" text-anchor="middle">still &rarr; intense  (energy)</text>`;
+  s += `<text class="axis-label" transform="translate(20,${H/2}) rotate(-90)" text-anchor="middle">light &rarr; dark  (darkness)</text>`;
+  CATALOGUE.forEach((r,i) => {
+    const c = COLOUR[r.movement] || "#8a2846";
+    s += `<circle class="dot" data-i="${i}" cx="${x(r.energy)}" cy="${y(r.darkness)}" r="6.5" fill="${c}" fill-opacity="0.82"/>`;
+  });
+  s += `</svg>`;
+  const wrap = document.getElementById("fieldWrap");
+  wrap.insertAdjacentHTML("beforeend", s);
+  const tip = document.getElementById("tip");
+  wrap.querySelectorAll(".dot").forEach(dot => {
+    const r = CATALOGUE[+dot.dataset.i];
+    dot.addEventListener("mousemove", ev => {
+      tip.innerHTML = `<div class="t">${esc(r.title)}</div><div>${esc(r.one_line||"")}</div>` +
+        (r.key_lyric ? `<div class="l">&ldquo;${esc(r.key_lyric)}&rdquo;</div>` : "");
+      const b = wrap.getBoundingClientRect();
+      tip.style.left = Math.min(ev.clientX-b.left+14, b.width-290)+"px";
+      tip.style.top = (ev.clientY-b.top+14)+"px"; tip.style.opacity=1;
+    });
+    dot.addEventListener("mouseleave", () => tip.style.opacity=0);
+    dot.addEventListener("click", () => playSong(r.id));
+  });
+  document.getElementById("legend").innerHTML = ORDER.map(m =>
+    `<span><span class="sw" style="background:${COLOUR[m]}"></span>${esc(m)}</span>`).join("");
+}
+
+/* ---------- Mood finder ---------- */
+function renderFeelings() {
+  const box = document.getElementById("feelings");
+  box.innerHTML = FEELINGS.map(f => `<button data-k="${f.key}">${esc(f.label)}</button>`).join("");
+  box.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+    box.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b===btn ? "true":"false"));
+    const f = FEELINGS.find(x => x.key === btn.dataset.k);
+    const ranked = CATALOGUE.map(r => {
+      let dist = Math.hypot(r.energy - f.e, r.darkness - f.d);
+      if (f.instrumental_bonus && r.instrumental) dist -= 0.12;
+      return {r, dist};
+    }).sort((a,b) => a.dist - b.dist).slice(0,5).map(x => x.r);
+    document.getElementById("finderOut").innerHTML = ranked.map(cardHTML).join("");
+  }));
+}
+
+/* ---------- Catalogue cards ---------- */
+function cardHTML(r) {
+  const tags = [r.genre, Array.isArray(r.mood)? r.mood.join(", "): r.mood, r.instrumental? "instrumental": (r.language||"")]
+    .filter(Boolean).join(" · ");
+  const audio = r.audio ? `<audio controls preload="none" src="${encodeURI(r.audio)}"></audio>`
+                        : `<div style="font-size:12px;color:var(--muted)">(audio not linked)</div>`;
+  return `<div class="card" id="song-${r.id}">
+    <h4>${esc(r.title)}</h4>
+    <div class="tags">${esc(tags)}</div>
+    <div class="one">${esc(r.one_line||"")}</div>
+    ${r.key_lyric ? `<div class="lyric">&ldquo;${esc(r.key_lyric)}&rdquo;</div>`:""}
+    ${audio}
+  </div>`;
+}
+function renderCatalogue() {
+  const root = document.getElementById("catalogue");
+  let html = "";
+  ORDER.forEach((m, mi) => {
+    const songs = CATALOGUE.filter(r => r.movement === m);
+    if (!songs.length) return;
+    html += `<div class="movement-head"><div class="mnum" style="color:${COLOUR[m]}">Movement ${ROMAN[mi]}</div>`+
+      `<h3>${esc(m)}</h3><p class="mb">${esc(BLURB[m]||"")}</p></div>`;
+    html += `<div class="cards">${songs.map(cardHTML).join("")}</div>`;
+  });
+  root.innerHTML = html;
+}
+
+/* ---------- play helper: scroll to a song's card and start it ---------- */
+function playSong(id) {
+  const card = document.getElementById("song-"+id);
+  if (!card) return;
+  card.scrollIntoView({behavior:"smooth", block:"center"});
+  const a = card.querySelector("audio");
+  if (a) { document.querySelectorAll("audio").forEach(x => { if(x!==a) x.pause(); }); a.play().catch(()=>{}); }
+  card.style.transition="box-shadow .3s"; card.style.boxShadow="0 0 0 3px var(--garnet-soft)";
+  setTimeout(()=>card.style.boxShadow="none", 1400);
+}
+
+function esc(s) { return String(s==null?"":s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+renderField(); renderFeelings(); renderCatalogue();
+</script>
+</body></html>
