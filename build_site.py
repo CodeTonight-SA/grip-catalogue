@@ -85,7 +85,37 @@ def copy_audio(records: list, out_dir: Path) -> None:
         r.pop("file", None)  # never leak a build-machine path into the page
 
 
-def html(records: list) -> str:
+def _upcoming_html(upcoming: list) -> str:
+    """Render the static Upcoming Songs section."""
+    import html as _html
+    cards = []
+    for item in upcoming:
+        title = _html.escape(item.get("title", ""))
+        lang = _html.escape(item.get("lang", ""))
+        teaser = _html.escape(item.get("teaser", ""))
+        lyric_raw = item.get("lyric", "") or ""
+        lyric_html = _html.escape(lyric_raw).replace("\n", "<br>")
+        cards.append(
+            f'<div class="upcoming-card">'
+            f'<h4>{title}</h4>'
+            f'<span class="lang-chip">{lang}</span>'
+            f'<div class="teaser">{teaser}</div>'
+            f'<details><summary>Lyrics</summary>'
+            f'<div class="lyric-body">{lyric_html}</div></details>'
+            f'</div>'
+        )
+    cards_html = "\n".join(cards)
+    return (
+        '\n<section class="upcoming"><div class="wrap">\n'
+        '  <h2>Upcoming Songs</h2>\n'
+        '  <p class="intro">Written, not yet recorded — lyrics on the page, songs on the way.</p>\n'
+        f'  <div class="upcoming-grid">\n{cards_html}\n  </div>\n'
+        '</div></section>\n'
+    )
+
+
+def html(records: list, upcoming: list | None = None) -> str:
+    upcoming_section = _upcoming_html(upcoming or [])
     data = json.dumps(records, ensure_ascii=False)
     feelings = json.dumps(FEELINGS, ensure_ascii=False)
     colours = json.dumps(MOVEMENT_COLOUR, ensure_ascii=False)
@@ -167,7 +197,23 @@ def html(records: list) -> str:
   .card .floor .chip {{ font-size:10.5px; letter-spacing:.4px; color:var(--charcoal);
     background:#f3eee6; border:1px solid var(--rule); border-radius:20px; padding:2px 9px; }}
   .card .floor .chip b {{ color:var(--garnet); font-weight:700; }}
+  .card details.lyrics {{ margin:0 0 10px; }}
+  .card details.lyrics summary {{ cursor:pointer; font-size:11px; letter-spacing:.5px; text-transform:uppercase; color:var(--garnet); font-weight:700; }}
+  .card details.lyrics .body {{ white-space:pre-wrap; font-size:12.5px; color:var(--ink); line-height:1.5; margin:7px 0 0; max-height:240px; overflow:auto; }}
+  .card details.lyrics .prov {{ font-size:10px; color:var(--muted); font-style:italic; margin-top:5px; }}
   .card audio {{ width:100%; height:34px; }}
+  /* Upcoming Songs */
+  .upcoming {{ padding:48px 0 24px; }}
+  .upcoming h2 {{ font-size:30px; color:var(--charcoal); margin:0 0 4px; border-bottom:2px solid var(--garnet); display:inline-block; padding-bottom:6px; font-family:Georgia,'Times New Roman',serif; font-weight:700; }}
+  .upcoming .intro {{ color:var(--muted); font-family:Georgia,serif; font-style:italic; margin:8px 0 22px; }}
+  .upcoming-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; }}
+  .upcoming-card {{ border:1px solid var(--rule); border-left:4px solid var(--garnet-soft); border-radius:9px; background:#fff; padding:15px 16px; }}
+  .upcoming-card h4 {{ margin:0 0 3px; font-family:Georgia,serif; font-size:17px; color:var(--charcoal); }}
+  .upcoming-card .lang-chip {{ display:inline-block; font-size:10px; letter-spacing:.8px; text-transform:uppercase; background:#f3eee6; border:1px solid var(--rule); border-radius:20px; padding:2px 9px; color:var(--garnet); font-weight:700; margin:0 0 8px; }}
+  .upcoming-card .teaser {{ font-size:13px; color:var(--muted); margin:0 0 10px; }}
+  .upcoming-card details {{ margin:0; }}
+  .upcoming-card details summary {{ cursor:pointer; font-size:11px; letter-spacing:.5px; text-transform:uppercase; color:var(--garnet-soft); font-weight:700; }}
+  .upcoming-card details .lyric-body {{ white-space:pre-wrap; font-size:12.5px; color:var(--ink); line-height:1.6; margin:7px 0 0; max-height:280px; overflow:auto; }}
   footer {{ color:var(--muted); font-size:12.5px; padding:40px 0 60px; text-align:center; }}
   footer .caveat {{ font-style:italic; max-width:680px; margin:8px auto 0; }}
 </style></head>
@@ -204,7 +250,7 @@ def html(records: list) -> str:
   <p class="sublede">All {n} songs, in movements. Each as the AI heard it.</p>
   <div id="catalogue"></div>
 </div></section>
-
+{upcoming_section}
 <footer><div class="wrap">
   Heard in full via <strong>grip-hear</strong> · audio &rarr; Gemini multimodal &rarr; structured hearing
   <div class="caveat">Each placement and impression is grounded in what the model actually heard. Tempo and musical key are measured deterministically with librosa, not guessed. Where shown, lyrics are transcribed via Vulavula speech-to-text; the model's guessed line is the pull-quote. Playback uses the audio files in this repository.</div>
@@ -283,6 +329,14 @@ function floorHTML(r) {{
   if (r.key) chips.push(`<span class="chip">key <b>${{fmtKey(r)}}</b></span>`);
   return chips.length ? `<div class="floor" title="Measured by librosa, not guessed">${{chips.join("")}}</div>` : "";
 }}
+function lyricsHTML(r) {{
+  if (!r.lyrics) return "";
+  const prov = r.lyrics_source === "notes" ? "Lyrics by Laurie Scheepers"
+             : "Transcribed via Whisper — may contain errors";
+  return `<details class="lyrics"><summary>Lyrics</summary>`+
+    `<div class="body">${{esc(r.lyrics)}}</div>`+
+    `<div class="prov">${{prov}}</div></details>`;
+}}
 function cardHTML(r) {{
   const tags = [r.genre, Array.isArray(r.mood)? r.mood.join(", "): r.mood, r.instrumental? "instrumental": (r.language||"")]
     .filter(Boolean).join(" · ");
@@ -294,6 +348,7 @@ function cardHTML(r) {{
     ${{floorHTML(r)}}
     <div class="one">${{esc(r.one_line||"")}}</div>
     ${{r.key_lyric ? `<div class="lyric">&ldquo;${{esc(r.key_lyric)}}&rdquo;</div>`:""}}
+    ${{lyricsHTML(r)}}
     ${{audio}}
   </div>`;
 }}
@@ -344,9 +399,15 @@ def main() -> int:
     if not records:
         sys.exit("FAIL: catalogue.json is empty")
 
+    # Load upcoming songs if present
+    upcoming_path = Path("upcoming.json")
+    upcoming: list = []
+    if upcoming_path.exists():
+        upcoming = json.loads(upcoming_path.read_text())
+
     args.out.mkdir(parents=True, exist_ok=True)
     copy_audio(records, args.out)
-    (args.out / "index.html").write_text(html(records), encoding="utf-8")
+    (args.out / "index.html").write_text(html(records, upcoming), encoding="utf-8")
     playable = sum(1 for r in records if r.get("audio"))
     print(f"site -> {args.out / 'index.html'}  ({len(records)} songs, {playable} playable)")
     return 0

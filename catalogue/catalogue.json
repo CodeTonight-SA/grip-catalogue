@@ -17,7 +17,10 @@
     "key": "D#",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 193.8
+    "duration_s": 193.8,
+    "lyrics": "What if I can be your friend What if this could be our end\nWell then I know not what to say Then I know not what to say\nWill there ever be a time When it's only you and I\nI don't know if I can know I don't know what I can know\nI'm not gonna stand aside I won't take this in my stride\nOh I hope you do so too Oh I hope you do so too\nI think we have realized Nothing should ever be disguised\nI know how it's on my own I know how it's on my own\nOh I hope you do so Oh I hope you do so\nYou\nYou",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "another-thought",
@@ -37,7 +40,10 @@
     "key": "G#",
     "mode": "minor",
     "key_source": "librosa",
-    "duration_s": 157.1
+    "duration_s": 157.1,
+    "lyrics": "I was young and you were young It was a party to enjoy\nI was drunk and you were drunk It was a really easy fist beat\nI decided that one night that I would just go with the flow\nLater on I realized what an amazing person you are\nNow what am I to do? Not sure if it is true\nDoes it really matter everything we've gone through?\nCouldn't it pick up maybe where we were ten years ago?\nTime is passing me by Time is passing you by\nWill we ever figure out the calm ways of our life?\nWell we did it all together and that was probably fun\nLet's just try and make this slow and see where things belong\nMaybe this could be the chance that we've all been waiting for\nGive it another thought",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "dirt-poor-genius",
@@ -57,7 +63,10 @@
     "key": "C",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 256.8
+    "duration_s": 256.8,
+    "lyrics": "I'm a dirt poor genius, I teach music through color and way.\nI'm a dirt poor genius, and I've got lots of bills to pay.\nMy family's got a big house, but all they do for me is pray.\nMy sister is a doctor, her husband and engineer.\nMy brother is in finance, and I can't even buy me a beer.\nI'm a dirt poor genius, I guess I'm just ahead of my time.\nI even ask my bed for money, but they couldn't even spare me anyway.\nI used to be an engineer, making fuel from coal.\nBut then I started traveling, it was like music to my soul.\nI'm a dirt poor genius, spend every penny that I am.\nWell now I teach and lift and pitch, and that's really not all that bad.\nI play the ukulele with the colors on the board, to strum or bake a rhythm, every color's a sound is a chord.\nI'm a dirt poor genius, is that so hard to see?\nI'm a dirt poor genius, I guess at least my mind is free.\nI made some silly paintings of the color music code, but I had to put them in storage, no one cared if I burned a load.\nI'm a dirt poor genius, why can't I sound a piece of art?\nI'm a dirt poor genius, if only I could get paid to be smart.\nI had to save some money, just couldn't afford my rent, so I put all my things in storage, but I guess all my luck was spent.\nI'm a dirt poor genius, I try not to remember that day.\nWhen I found my treasure just empty, just a little pile of dust for me to play.\nMy 12 string guitar, Charango, my PC and my back, piano, ukuleles, all the prototypes that I like.\nI'm a dirt poor genius, isn't it such a shame?\nIf found it'll be sold for millions, one day when I am dead rich in fame.\nI'm a dirt poor genius, girls don't even look my way.\nI'm a dirt poor genius, I guess only one for me is to pay.\nOne day when I'm rich in fame is they'll pretend to love me night and day.",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "eendag",
@@ -150,7 +159,10 @@
     "key": "A",
     "mode": "minor",
     "key_source": "librosa",
-    "duration_s": 212.2
+    "duration_s": 212.2,
+    "lyrics": "Do you believe in people, do you have faith in the truth?\nSeems to me it's agreeable, we don't know the whole truth\nTrying to constantly prove that you are faith in the human race\nSeems to me it's not provable, unless you take a chance\nSeems to you it's not provable, unless you take a second glance\nTrying to constantly prove that you are faith in the human race\nSeems to me I'm not winning, appears to me I'm incorrect\nSeems to me I'm always missing, maybe I should just forget\nTrying to constantly prove that you are faith in the human race\nTrying to constantly prove that you are faith in the human race\nIs it all just futile, is it all just a ruse?\nIs it all never beautiful, is it all an ugly mess?\nTrying to constantly prove that you are faith in the human race\nTrying to constantly prove that you are faith in the human race\nI don't know any more, I really don't know\nI don't know any more, I really don't know\nI don't know any more, I really don't know\nI don't know any more, I really don't know\nI don't know, I really don't know",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "for-a-while",
@@ -174,7 +186,10 @@
     "key": "E",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 208.8
+    "duration_s": 208.8,
+    "lyrics": "For a while, it all seemed okay, but nothing ever stays, it all goes away\nFor a while, wanting to be alone, maybe starts to show\nShould I just go away, wondering about it all today\nWondering what I should do today, for a while\nIn a while, I will take my pills, then I'll pay my bills\nAll those fucking bills to pay\nIn a while, I'll climb on a plane, will I feel the same\nWho is to blame for all of this, and wondering about it all today\nWondering what I should do to stay, and wondering about it all today\nWondering if I should stay, for a while\nFor a while, I thought I was insane, and in so much pain\nEverything was great all the time, in a while maybe I will change\nIt just sounds so strange, and all the things we do to make us happy\nWondering about it all today, wondering what I should do today\nFeeling all the things I feel today, feeling everything today\nFor a while",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "god",
@@ -194,7 +209,10 @@
     "key": "G#",
     "mode": "minor",
     "key_source": "librosa",
-    "duration_s": 146.8
+    "duration_s": 146.8,
+    "lyrics": "God, my sweet Lord, I pray for a new beginning.\nGod, my sweet Lord, I pray for a new beginning.\nAnd I want to throw away my life from before I want no more.\nGod, my sweet Lord, I pray for a new beginning.\nGod, my sweet Lord, I pray for a new beginning.\nAnd I want to throw away my life from before I want no more.\nGod, my sweet Lord, I pray for a new beginning.",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "happiness-that-s-broke",
@@ -214,7 +232,10 @@
     "key": "A",
     "mode": "minor",
     "key_source": "librosa",
-    "duration_s": 190.2
+    "duration_s": 190.2,
+    "lyrics": "Well, I feel bad for all the rest\nIt's time to go\nI failed the test\nSometimes we say\nAll the right things\nThen we are alone\nThis is what life brings\nSo much sadness and awe\nSo much happiness that's grown\nSo much excitement and remorse\nSo much gladness and divorce\nOnce I was there\nDecided to leave\nMaybe I was wrong\nBut who the hell cares\nThat I was wrong\nBut who the hell cares\nThe days spent inside\nThe trappings of the mind\nIt's way too much\nFor anyone left behind\nWhere did it go\nWhere would it be\nWhere did it go\nAnd what did you see\nSo much sadness and awe\nSo much sadness that's grown\nSo much excitement and remorse\nSo much gladness and divorce\nSo much sadness and awe\nSo much happiness that's grown\nSo much excitement and remorse\nSo much gladness and divorce",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "i-woke-up-this-morning",
@@ -234,7 +255,10 @@
     "key": "G",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 266.2
+    "duration_s": 266.2,
+    "lyrics": "bueno.\nI woke up this morning\nFeeling glad\nAll my life's a wonder\nAnd I'm not sad\nAnd all I have to do is think about you\nAnd everything's okay\nI sat by the ocean\nWatching the waves\nThere's nothing important\nOn my mind today\nAll I ever wanted was granted\nThere's nothing left to say\nI wish I could ignore it\nBury it in the sand\nBut I'll just keep on mourning\nThe loss I never had\nAnd all I have to do is think about you\nAnd everything's okay\nAnd all I have to do is think about you\nI woke up this morning\nFeeling glad\nAll my life's a wonder\nAnd I'm not sad\nAnd all I have to do is think about you\nAnd everything's okay\nAll I have to do is think",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "i-m-feeling-good",
@@ -254,7 +278,10 @@
     "key": "A",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 195.9
+    "duration_s": 195.9,
+    "lyrics": "I'm coming down, I'm coming down\nLife's coming down, I'm feeling good\nI'm right on track, can't deny it so far\nAnd so thanks to you, and so thanks to you\nI've entered the room, my brain is getting unscrew\nBut I'm not down on anything\nThis is why I sing\nWhen you are with me\nI feel where I can be\nMyself and no one else\nAnd so thanks to you\nMyself and no one else\nAnd so thanks to you\nI'm right on track, can't deny it so far\nAnd so thanks to you",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "i-m-waiting",
@@ -274,7 +301,10 @@
     "key": "F",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 87.1
+    "duration_s": 87.1,
+    "lyrics": "I'm waiting, I'm aching, I'm waiting for you\nI'm waiting, I'm aching, I'm waiting for you\nI'll stay here and think of you, I'll wait here forever just to be\nwith you",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "just-fine",
@@ -299,7 +329,10 @@
     "key": "E",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 275.4
+    "duration_s": 275.4,
+    "lyrics": "Find me on my own, leave me alone I won't check the phone, I'll just stay at home\nYeah, then I will be just fine\nSafety or mindful, there's nothing more to do Thinking or benign, but wanting more than mine\nYeah, actually I'm fine\nLike concentrating on the feeling to belong Hoping so much space, I think I will face\nYeah, just give me some more time\nControlling mankind, something one to find Maybe I'll be blind, freaking out at my mind\nYeah, what it all be\nYeah, I'll be blind, freaking out at my mind\nYeah, just give me some more time\nYeah, just give me some more time\nYeah, I'll be blind, freaking out at my mind\nYeah, just give me some more time\nYeah, I'll be blind, freaking out at my mind\nYeah, just give me some more time\nYeah, I'll be blind, freaking out at my mind\nYeah, just give me some more time\nYeah, just give me some more time\nYeah, just give me some more time\nOh, yeah, just you know\nLeave me all alone\nI'll find me on my own",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "kry-kontrole",
@@ -343,7 +376,10 @@
     "key": "A",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 180.5
+    "duration_s": 180.5,
+    "lyrics": "Thank you very much.\nOne day I'll be just like you\nPerfect in everything I do\nBecause that's when she knew what's for me\nTo carry on your legacy\nOne day you're close near to the end\nI would like to call you my friend\nI fall when it's on, we cry all day\nLet the spirit guide us and show us their way\nLet the spirit guide us and show us their way\nOne day I'll be just like you\nI'll be just like you",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "luister-demo",
@@ -387,7 +423,10 @@
     "key": "G",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 120.5
+    "duration_s": 120.5,
+    "lyrics": "Yes, I know you've been struggling\nto know\nWell, yeah, so do I\nIt's all the same thing\nWell, yeah, so do I\nIt's all the same thing\nWell, yeah, so do I\nIt's all the same thing",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "one-day",
@@ -407,7 +446,10 @@
     "key": "G",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 229.7
+    "duration_s": 229.7,
+    "lyrics": "One day I'll be there waiting for you\nSo don't be afraid, only then I should\nAnd one day there'll be no one in the world but you\nAnd I won't care if it could be just the way we want to be\nOnly me and this year together every day\nI bet you someday it will be just right in every way\nAnd I'll be there standing right in front of you\nAnd then we will be free cause I love you\nAnd I'll be there standing right in front of you\nAnd I'll be there standing right in front of you",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "realize",
@@ -447,7 +489,10 @@
     "key": "E",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 318.6
+    "duration_s": 318.6,
+    "lyrics": "One, two, three, four\nTwo, three, four\nOne, two, three, four\nTwo, three, four\nOne, two, three, four\nFour, five, six\nTwo, three, four\nIt seems to look old\nIt seems to look fierce\nTime\nCause when we lost our connection, I nearly lost my mind\nThis morning I look out of the window, well what did I see?\nI saw billions of blessings raining down on me\nFor a million prayers swaddled away with the dark\nAnd the beginning of the year was a waste of time\nBecause the summer went and the river let's rise\nAnd it seemed to be no good, no one died\nIt seems to have grown, it seems to have danced alright\nThose days I got no signal, I took it as a start\nFor some weird reason, I think I'm worthy now\nBut what I won't last another season, so I made a vow\nIf you bring the rain, I'll sacrifice my song\nSo you won't feel the pain, now that I use my gun\nFor so many years, I'll try to make you mine\nBut I finally made a vow for the ashes of life\nFor a million prayers swaddled away with the dark\nFor a million prayers swaddled away with the dark\nAnd the beginning of the year was a waste of time\nBecause the summer went and the river let's rise\nAnd it seemed to have grown, no one died\nIt seems to have grown, it seems to have danced alright\nThank you for watching!",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "scare-off-the-devils",
@@ -467,7 +512,10 @@
     "key": "E",
     "mode": "minor",
     "key_source": "librosa",
-    "duration_s": 283.3
+    "duration_s": 283.3,
+    "lyrics": "What do you think of this?\nHow are you guys doing?\nGood.\nHello.\nHow are you?\nGood.\nWhat is this?\nThat is very nice.\nThat is very nice.\nI like this.\nThank you for watching.\nAlright, the night most was well.\nI think you can see from up up.\nHere you go.\nEnjoy.\nWe can live forever.\nHave a great adventure.\nWhen we were just scared of wolves.\nJust scared of the devils.\nWhen you're ready.\nJust come to me.\nThere's a line.\nA fine line to climb.\nTo know the workings of the minds.\nAnd scared of the devils.\nIt might be heavy.\nJust trust in me.\nShould we call up this melting wall.\nAnd on the top just push up.\nJust push up the devils.\nWhen you're ready.\nJust come to me.\nWhen you're ready.\nJust come to me.\nTogether.\nWe can live forever.\nHave a great adventure.\nWhen we were just scared of wolves.\nJust scared of the devils.\nIt might be heavy.\nJust trust in me.\nWhen you're ready.\nJust come to me.\nHow can you please.\nYou guys drink.",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "singing-along",
@@ -487,7 +535,10 @@
     "key": "D",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 194.6
+    "duration_s": 194.6,
+    "lyrics": "Am I writing this song?\nNo I'm not sure, I'm just singing along\nAm I doing this for fun?\nNo I'm not sure, but I'm singing along\nWhat else would I do if it weren't for you to pull me through?\nBut anything is construed, a feeling too, just like you\nWhat else would I do if it weren't for you to pull me through?\nWhat else would I do if it weren't for you to pull me through?\nBut anything is construed, a feeling too, just like you\nWhat else would I do if it weren't for you?\nWhat else would I do if it weren't for you?",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "ten-minutes-he-said",
@@ -507,7 +558,10 @@
     "key": "D",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 260.5
+    "duration_s": 260.5,
+    "lyrics": "10 minutes he said, just 10 minutes please She looked at the clock, she looked at the\nkeys She said, Lori I swear, if you don't come to bed I will unplug the router and that\nwill be there But Lori's got a bug, and the bug's got a bug And the guild needs a feature\nand the bot needs a hug And the clock says 30, and his wife says his name And the man\nwho promised 10 minutes cannot feel any shame And Lori is MIA, she's holding the world up\nwhile he's holding control Mia is the reason the man can't even dream She saved his life,\nnow she saves it every evening by letting him have Just 10 more minutes please\nHe's juggling the day job, and the guild and the grip And the kids need a lesson, and the\ncode needs a fix And the meeting ran over, and the founder lies her up And somewhere in the chaos\none woman is enough She doesn't write the code, but she writes the permission She doesn't ship the\nfeatures, but she ships the conditions To let a man build something past the hour he should sleep\nMia keeps the ground steady, while Lori goes deep\nCause Mia is patient, and Lori is at my age She counted every minute past the 10 that he promised her today\nMia is the anchor, Lori is the kite She holds the string steady, he flies through the night\nAnd then the string never breaks, cause she tied it just right\nHe said she saved his life, and he meant every word She's a soulmate, that's not a thing you earn\nThat's the thing you protect, every single day Even when the code is calling, even when the guild won't wait\nSo Lori, close the laptop, walk into the room Where the woman who saved you is saving you a spot\nOn the couch, the code will compile tomorrow She won't wait forever, well actually she will\nThat's the whole damn point\nMia is patient, and Lori is at my age But he always comes home\nAt the end of the day, she gave him 10 minutes He took 33, but she gave him a life\nAnd he gave her a dream, and the dream is still building And the building takes time, and the time is a gift\nFrom the woman who's fine, with 10 minutes becoming a lifetime\nMia, he retired 45, he promised, he also promised 10 minutes",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "the-place",
@@ -527,7 +581,10 @@
     "key": "F#",
     "mode": "minor",
     "key_source": "librosa",
-    "duration_s": 254.2
+    "duration_s": 254.2,
+    "lyrics": "There's a place I know Where no one wants to go\nPaintings of someone shining aglow The rooms are all inside\nCarters that divide, Ceilings endless, windows no one knows\nOnce you knock on the door You're told to look at the floor\nAnd then you realize you are just alone This place is open to all that come\nFinding your way through the maze It's path to take, you'll change\nNothing is certain Your world has been written alone\nGo to this place where future thoughts are shown\nThis place is open to all who would come Where memories and future thoughts are shown\nEverything will be okay Everything will be okay\nIt's just me and you again tonight We will be just fine\nEverything will be just fine There's nothing to worry about\nThis place Where memories and future thoughts are shown\nMemories and future thoughts are grown Memories and future thoughts are gone",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "there-s-more-to-all-of-this-2025-mix",
@@ -552,7 +609,10 @@
     "key": "D",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 272.0
+    "duration_s": 272.0,
+    "lyrics": "So it goes, I've braved the stormy weather\nAnd I have a lot to say\nFor I know if you peek behind the curtain\nYour life will be bright as day\nThere's more to all of this\nAnd the lights will shine when you will die\nBut if you survive, fight the stormy weather\nAnd the lights will shine when you will die\nBut if you survive, fight the stormy weather\nYou should know that life is like a river\nAnd you are just floating by\nThere's more to all of this\nI've been through gentle streams and rapids\nThe smiles, the skies, the pain\nThere's more to all of this\nAnd the lights will shine when you will die\nBut if you survive, fight the stormy weather\nThere's more to all of this\nAnd the lights will shine when you will die\nBut if you survive, fight the stormy weather\nThere's more to all of this\nAnd the lights will shine when you will die\nTo who now I've braved the stormy weather\nAnd I had a lot to say\nBut I am done for now\nI am\nI am\nI am\nI am\nI am\nI am",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "too-much-in-my-mind",
@@ -577,7 +637,10 @@
     "key": "D",
     "mode": "minor",
     "key_source": "librosa",
-    "duration_s": 182.0
+    "duration_s": 182.0,
+    "lyrics": "Wondering about this thing that happened today\nFeels like I am overthinking everything today\nI am too much in my mind\nI want to go out of my mind\nSometimes dreaming on the feeling I don't give a fuck\nConstantly doing things, constantly a drain\nBecoming negative will only cause you pain\nSurround yourself with good friends and then you'll be okay\nI am too much in my mind\nI want to go out of my mind\nI am too much in my mind\nI want to go out of my mind\nI want to go out of my mind\nI want to go out of my mind\nI want to go out of my mind\nI want to go out of my mind\nI am too much in my mind\nI want to go out of my mind\nI want to go out of my mind\nI want to go out of my mind\nI want to go out of my mind",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "wait-until-i-feel-good",
@@ -601,7 +664,10 @@
     "key": "D",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 227.3
+    "duration_s": 227.3,
+    "lyrics": "Once there was some blues that I could not refuse\nThere was nothing left to do, did nothing left to do\nBut wait, wait until I feel you\nOnce there was some proof that I could not refute\nIt was all completely true, but what else could I do but wait\nWait until I feel you\nTrying to make things better is what I used to do\nAnd now I feel so good, but it's been good\nIt's been good loving you\nOnce there was some blues that I could not refuse\nThere was nothing left to do, nothing left to do but wait\nWait until I feel you\nOnce there was some proof that I could not refute\nIt was all completely true, but what else could I do but wait\nWait until I feel you\nTrying to make things better is what I used to do\nAnd now I feel so good, but it's been good\nIt's been good loving you\nIt was all completely true, but it's been good loving you\nIt was all completely true, but it's been good loving you",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "alle-mans-mix-3",
@@ -758,7 +824,10 @@
     "key": "E",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 345.5
+    "duration_s": 345.5,
+    "lyrics": "theories of\nhell\nwhile\n0\n0\n0\nI\nOh, we have so many faces to pull, Johnny\nOh, dear, my living was so right\nHe hit me along the head\nAnd made it crucial to making his death pay\nOh, dear, Johnny\nYou have so much to learn\nOh, dramaturg\nOh, dear, your face is wrong\nYou've pulled her too many times\nFor the expression\nFor the expression\nTo be right again\nNo more sitting around waiting for that one studio phone call\nOh, cause your yesterday's new\nAnd just maybe\nAnd just maybe\nYour glass house needs a little flip\nIt's like no old dramaturg\nYour face is wrong\nYou've pulled her too many times\nOh, for the expression\nFor the expression\nOh, oh, what do you do when you don't have many rules\nOh, what do you see when you had a last move\nOh, yeah, oh, what do you do when you don't have many rules\nYou go down your knees, down your knees\nAnd you pray to one another, you'll pray to me\nYeah, oh, dramaturg\nOh, oh, your face is wrong\nYou've pulled her too many times\nFor the expression\nFor the expression\nTo be right again\nYou've pulled her too many times\nYou've pulled her too many times\nFor the expression\nTo be right again\nYou",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "freetown-must-be-a-way",
@@ -783,7 +852,10 @@
     "key": "A",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 350.1
+    "duration_s": 350.1,
+    "lyrics": "music\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar\nguitar",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "freetown-psychological-warfare",
@@ -803,7 +875,10 @@
     "key": "G",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 227.2
+    "duration_s": 227.2,
+    "lyrics": "I want to remember about when I was high on you\nI want to remember the altitude\nThey keep on feeding me all these troubles, all these lies\nTo know me out of my love for you\nYou say just in affair, as in love in despair\nAt what psychological affair\nThe sins of your skin, the slings on the fabric of my emotional\nTheir actions won't break what we feel\nTheir brain won't slow and wash away our blood\nWe'll escape this threshold they have overlooked\nDancing to the funk in this conspiracy\nYou say just in affair, as in love in despair\nAt what psychological affair\nThe sins of your skin, the slings on the fabric of my emotional\nYou say just in affair, as in love in despair\nAt what psychological affair\nThe sins of your skin, the slings on the fabric of my emotional\nYou say just in affair, as in love in despair\nAt what psychological affair\nThe sins of your skin, the slings on the fabric of my emotional\nYou say just in affair, as in love in despair",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "howzit-my-bru",
@@ -892,7 +967,10 @@
     "key": "G",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 201.2
+    "duration_s": 201.2,
+    "lyrics": "What do you do when you get lonely?\nWhat do you do when you feel sad?\nYou get someone you can switch to You get someone you understand\nThen you feel your problems are finally going away\nWhat do you do when you get lonely?\nWhat do you do when you feel sad?\nWould you put your arms around me?\nCall me everything's my time\nAs the time will come near for me to play my hand\nWhat do you do when you get lonely?\nIt's the recommended way of solving, It's supposed to be the natural way,\nBut I think before you get there, You have things you ought to understand,\nOtherwise everything will always just fail.\nIt would be very, very easier if we followed the same plan,\nBut strange on into your one, But you've been got into mine,\nEverything is changing, But it all stays this same.\nWhat do you do if you get lonely? What do you do if you get sad?\nMaybe it's my own fault, Maybe it's always my fault,\nIt's always my fault, It's always my fault.",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "nemesis",
@@ -912,7 +990,10 @@
     "key": "A",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 149.4
+    "duration_s": 149.4,
+    "lyrics": "you\nNemesis my man, can't always find me anywhere\nMy nemesis menacing this, always thinking about what you did\nMy nemesis watching me, why won't you go away\nMy nemesis menacing this, please stop traveling me\nWhy can't you see this blue\nWhy can't you see this blue\nNemesis will you be gone, making me feel a bit strong\nMy nemesis menacing me, and getting rid of everything\nAnd getting rid of all the good, and making me an unstable move\nMy nemesis is my only breath, taking me away off track\nWhy can't you see this blue\nWhy can't you see this blue\nWhy can't you see this blue\nNemesis going away",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "ongemaklike-situasies",
@@ -982,7 +1063,10 @@
     "key": "E",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 163.2
+    "duration_s": 163.2,
+    "lyrics": "You see that such love is small And I know what I have to know\nI fear it won't just take me Together you and me\nYou fear it raises control It's time to have a phone\nEveryone just like me Everyone just like me\nYou feel you're all alone No wonder it raises control\nEveryone just like me Everyone just like me\nThe one who filled your eyes You want me to hide\nYou should feel the cure\nYou feel it raises control It's time to have a phone\nEveryone just like me Everyone just like me\nIt's such a love song And I know what I have to know\nYou fear it won't just take me Together you and me\nYou fear it raises control It's time to have a phone\nEveryone just like me Everyone just like me\nYou fear it raises control It's time to have a phone",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "broken-ring-finger",
@@ -1131,7 +1215,10 @@
     "key": "B",
     "mode": "minor",
     "key_source": "librosa",
-    "duration_s": 370.2
+    "duration_s": 370.2,
+    "lyrics": "To the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nTo the end.\nHe stopped my sleep, died in my life\nI fell so hard, fell so hard\nI fell so hard, fell so hard\nI fell so hard, fell so hard\nI fell so hard, fell so hard",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "the-black-sheep",
@@ -1413,7 +1500,10 @@
     "key": "E",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 140.4
+    "duration_s": 140.4,
+    "lyrics": "Laying out your window\nLaying out your window\nGolden hair\nI heard you singing in the midnight air\nMy book is closed\nI read no more\nWatching the fire dust\nOn the floor\nI left my book\nI've left my room\nFor I left you singing through the years\nSinging, singing\nA medallion\nLaying out the window\nGolden hair",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "if-pink-floyd-cover",
@@ -1433,7 +1523,10 @@
     "key": "E",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 264.8
+    "duration_s": 264.8,
+    "lyrics": "If I were a swan, I'd be gone\nIf I were a train, I'd be late\nAnd if I were a good man, I'd talk to you more often than I can\nIf I were asleep, I could dream\nAnd if I were afraid, I could hide\nIf I go insane, please don't put your wires in my brain\nIf I were the moon, I'd be cool\nAnd if I were a role, I would bend for you\nIf I were a good man, I'd understand the spaces between friends\nIf I were alone, I would cry\nAnd if I was you, I'd be home and dry\nAnd if I go insane, will you still let me join in with the game?\nIf I were you, I'd be cool\nIf I were a swan, I'd be gone\nIf I were a train, I'd be late again\nIf I were a good man, I'd talk with you more often than I can",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "if-you-go-away",
@@ -1458,7 +1551,10 @@
     "key": "A",
     "mode": "minor",
     "key_source": "librosa",
-    "duration_s": 224.5
+    "duration_s": 224.5,
+    "lyrics": "If you look away on this summer day Then you might as well take the sun away\nAll the birds that flew in the summer sky When our love was near and our hearts were high\nWhen the day was young and the night was long And the moon stood still for the night birds song\nIf you go away, if you go away, if you go away\nBut if you stay I'll make you a day Like no day has been or won't be again\nWe'll sail on the sun, we'll ride on the rain We'll touch the trees, then worship the wind\nAnd if you go, I don't understand Believe me just enough love to fill up my head\nAnd if you go away, if you go away, if you go away, if you go away\nAs I know you must, there'll be nothing left In the world to trust, just an empty room\nFull of empty space, like the empty glue I see on your face, can I tell you now\nAs you turn to go, I'll be dying slow Till you're next to the love, if you go away, if you go away, if you go away\nBut if you stay I'll make you a night Like no night has been or won't be again\nI'll sail on your smile, I'll ride on your touch I'll touch your eyes, I love you so much\nBut if you go, now I won't cry as long as it is done From the world goodbye\nAnd if you look away, and if you look away, if you look away, if you go away",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "you-ve-got-to-hide-your-love-away",
@@ -1478,7 +1574,10 @@
     "key": "B",
     "mode": "minor",
     "key_source": "librosa",
-    "duration_s": 149.9
+    "duration_s": 149.9,
+    "lyrics": "Here I stand, head in head and turn my face to the wall\nIf she's gone, I can't go on feeling two-foot small\nBeware, people stare each and every day\nI can see them laugh at me and I hear them say\nHey, you've got to hide your love away\nHey, you've got to hide your love away\nHow can I even try, I can never win\nHearing them say them in the state I live\nHow can she say to me love won't find a way\nGather out all your clowns, let me hear you say\nHey, you've got to hide your love away\nHey, you've got to hide your love away\nHey, you've got to hide your love away\nHey, you've got to hide your love away",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "aisle-seat-mix-1",
@@ -1503,7 +1602,10 @@
     "key": "D#",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 202.5
+    "duration_s": 202.5,
+    "lyrics": "What if I can be your friend?\nWhat if that could mean our end?\nThen I know not what to say Will there ever be a time\nWhen it's only you and I I don't know that I can know\nI'm not gonna stand aside I won't take this in my stride\nOh I hope you do so too Oh I hope you do so too\nI think we every realize That nothing ever be disguised\nI know how it is on my own I know how it's on my own\nI know how it is on my own I know how it is on my own\nI know how it is on my own\nI know how it is on my own\nI know how it is on my own",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "mix-1-2",
@@ -1527,7 +1629,10 @@
     "key": "D",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 270.0
+    "duration_s": 270.0,
+    "lyrics": "So it goes, I've braved the stormy weather\nAnd I have the love to sing\nFor I know if you peek behind the curtain\nYour life will be bright as day\nThere's more to all of them\nAnd the lights will shine when you won't die\nBut if you survive, fight the stormy weather\nFor I know if you peek behind the curtain\nAnd the lights will shine when you won't die\nBut if you survive, fight the stormy weather\nYou should know that life is like a river\nAnd you are just floating by\nThere's more to all of them\nI've been through gentle streams and rapids\nThe smiles, the skies, the pain\nThere's more to all of them\nAnd the lights will shine when you won't die\nBut if you survive, fight the stormy weather\nThere's more to all of them\nAnd the lights will shine when you will die\nBut if you survive, fight the stormy weather\nThere's more to all of them\nBut if you survive, fight the stormy weather\nSo now I've braved the stormy weather\nAnd I had a lot to say\nBut I am done for now\nI am\nI am\nI am\nI am\nI am\nI am\nI am\nI am\nI am",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "mix-final-1-1",
@@ -1552,7 +1657,10 @@
     "key": "D",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 271.0
+    "duration_s": 271.0,
+    "lyrics": "So it goes, I've braved the stormy weather\nAnd I have the love to sing\nFor I know if you peek behind the curtain\nYour life will be bright as day\nThere's more to all of them\nAnd the lights will shine when you will die\nBut if you survive, fight the stormy weather\nFor I know if you peek behind the curtain\nAnd the lights will shine when you will die\nBut if you survive, fight the stormy weather\nYou should know that life is like a river\nAnd you are just floating by\nThere's more to all of them\nI've been through gentle streams and rapids\nThe smiles, the skies, the pain\nThere's more to all of them\nAnd the lights will shine when you will die\nBut if you survive, fight the stormy weather\nThere's more to all of them\nAnd the lights will shine when you will die\nBut if you survive, fight the stormy weather\nThere's more to all of them\nAnd the lights will shine when you will die\nBut if you survive, fight the stormy weather\nThere's more to all of them\nAnd the lights will shine when you will die\nBut if you survive, fight the stormy weather\nSo now I've braved the stormy weather\nAnd I had a lot to say\nBut I am done for now\nI am\nThanks for watching!",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "mixdown",
@@ -1600,7 +1708,10 @@
     "key": "D",
     "mode": "major",
     "key_source": "librosa",
-    "duration_s": 259.0
+    "duration_s": 259.0,
+    "lyrics": "So it goes, I've braved the stormy weather\nand I've got a lot to say\nFor I know with pink beyond the curtains\nYour life will be bright as day\nAnd the lights will shine when you won't die\nBut if you survive, fight the stormy weather\nThere's more to all of it\nYou should know that life is like a river\nAnd you are just floating by\nThere's more to all of it\nI've been through gentle streams and rivers\nThe smiles, the skies, the pain\nIt's more to all of it\nAnd the lights will shine when you won't die\nBut if you survive, fight the stormy weather\nThere's more to all of it\nAnd the lights will shine when you will die\nBut if you survive, fight the stormy weather\nThere's more to all of it\nSo now\nI've braved the stormy weather\nAnd I've got a lot to say\nBut I've got a lot to say\nBut if you survive, fight the stormy weather\nThere's more to all of it\nBut if you survive, fight the stormy weather",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "realise-1",
@@ -1624,7 +1735,10 @@
     "key": "F#",
     "mode": "minor",
     "key_source": "librosa",
-    "duration_s": 226.3
+    "duration_s": 226.3,
+    "lyrics": "It's just a normal day, people going there are way out in a car somewhere\nA man totally loses his head\nIt's just a normal day, so why am I feeling so afraid out in a place somewhere\nA normal worker bakes their bread to give to their families\nSo that day can keep on living a life that can be so hard that you all can realize\nRealize\nIt's just a normal day, people going there are way out in a car somewhere\nA man totally loses his head\nIt's just a normal day, so why am I feeling so afraid out in a place somewhere\nA normal worker bakes their bread to give to their families\nSo that day can keep on living a life that can be so hard that you all can realize\nRealize\nRealize\nRealize\nRealize\nRealize\nRealize\nRealize\nRealize",
+    "lyrics_source": "whisper",
+    "lyrics_lang": "eng"
   },
   {
     "id": "koningin-phone-recording",
