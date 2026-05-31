@@ -174,6 +174,8 @@ def html(records: list) -> str:
   .card details.lyrics .body {{ white-space:pre-wrap; font-size:12.5px; color:var(--ink);
     line-height:1.5; margin:7px 0 0; max-height:220px; overflow:auto; }}
   .card details.lyrics .prov {{ font-size:10px; color:var(--muted); font-style:italic; margin-top:5px; }}
+  .card details.lyrics.translation summary {{ color:var(--garnet-soft); }}
+  .card details.lyrics.translation .body {{ font-style:italic; color:var(--muted); }}
   .card audio {{ width:100%; height:34px; }}
   footer {{ color:var(--muted); font-size:12.5px; padding:40px 0 60px; text-align:center; }}
   footer .caveat {{ font-style:italic; max-width:680px; margin:8px auto 0; }}
@@ -292,10 +294,18 @@ function floorHTML(r) {{
 function lyricsHTML(r) {{
   // Real transcribed lyrics (Vulavula). key_lyric (the model's guess) still
   // shows above as the pull-quote; this is the full, provenance-stamped text.
+  // When an English translation exists (lyrics_en, Vulavula afr->eng) it is
+  // shown as a second collapsible block so a non-Afrikaans reader can follow.
   if (r.lyrics_source !== "vulavula" || !r.lyrics) return "";
-  return `<details class="lyrics"><summary>Lyrics</summary>`+
+  const orig = `<details class="lyrics"><summary>Lyrics</summary>`+
     `<div class="body">${{esc(r.lyrics)}}</div>`+
     `<div class="prov">Transcribed via Vulavula${{r.lyrics_lang? " ("+esc(r.lyrics_lang)+")":""}}</div></details>`;
+  const en = r.lyrics_en
+    ? `<details class="lyrics translation"><summary>Lyrics (English)</summary>`+
+      `<div class="body">${{esc(r.lyrics_en)}}</div>`+
+      `<div class="prov">Translated via Vulavula (afr&rarr;eng)</div></details>`
+    : "";
+  return orig + en;
 }}
 function cardHTML(r) {{
   const tags = [r.genre, Array.isArray(r.mood)? r.mood.join(", "): r.mood, r.instrumental? "instrumental": (r.language||"")]
