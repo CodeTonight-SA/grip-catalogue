@@ -125,6 +125,7 @@ def html(records: list, upcoming: list | None = None) -> str:
     n_instr = sum(1 for r in records if r.get("instrumental"))
     n_afr = sum(1 for r in records if (r.get("language") or "").lower().startswith("afrik"))
     n_movements = len({r["movement"] for r in records})
+    n_e = sum(1 for r in records if (r.get("key") or "").strip().split(" ")[0].upper() == "E")
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -228,6 +229,7 @@ def html(records: list, upcoming: list | None = None) -> str:
     <div class="n"><span class="big">{n_movements}</span><span class="lab">Movements</span></div>
     <div class="n"><span class="big">{n_instr}</span><span class="lab">Instrumental</span></div>
     <div class="n"><span class="big">{n_afr}</span><span class="lab">In Afrikaans</span></div>
+    <div class="n"><span class="big">{n_e}</span><span class="lab">In the key of E</span></div>
   </div>
 </div></header>
 
