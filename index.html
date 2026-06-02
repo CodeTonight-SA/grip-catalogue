@@ -26,6 +26,15 @@
   .numbers { display:flex; gap:34px; margin:30px 0 0; flex-wrap:wrap; }
   .numbers .n .big { font-family:Georgia,serif; font-size:34px; color:var(--garnet-soft); display:block; line-height:1; }
   .numbers .n .lab { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#9a948a; }
+  /* "In the key of E" — one-tap filter control (the stat IS the toggle) */
+  .numbers .n.n-tap { cursor:pointer; border-radius:8px; padding:6px 10px; margin:-6px -10px;
+    transition:background .15s, box-shadow .15s; outline:none; -webkit-tap-highlight-color:transparent; }
+  .numbers .n.n-tap .lab { color:var(--garnet-soft); }
+  .numbers .n.n-tap:hover { background:rgba(176,102,125,.18); }
+  .numbers .n.n-tap:focus-visible { box-shadow:0 0 0 2px var(--garnet-soft); }
+  .numbers .n.n-tap[aria-pressed="true"] { background:var(--garnet); }
+  .numbers .n.n-tap[aria-pressed="true"] .big,
+  .numbers .n.n-tap[aria-pressed="true"] .lab { color:#fff; }
 
   section.block { padding:48px 0 8px; }
   section.block > .wrap > h2 { font-size:30px; color:var(--charcoal); margin:0 0 4px;
@@ -101,7 +110,7 @@
     <div class="n"><span class="big">7</span><span class="lab">Movements</span></div>
     <div class="n"><span class="big">18</span><span class="lab">Instrumental</span></div>
     <div class="n"><span class="big">19</span><span class="lab">In Afrikaans</span></div>
-    <div class="n"><span class="big">24</span><span class="lab">In the key of E</span></div>
+    <div class="n n-tap" id="eFilter" role="button" tabindex="0" aria-pressed="false" title="Tap to show only the songs in the key of E"><span class="big">24</span><span class="lab">In the key of E &#9656;</span></div>
   </div>
 </div></header>
 
@@ -121,7 +130,7 @@
 
 <section class="block"><div class="wrap">
   <h2>The Catalogue</h2>
-  <p class="sublede">All 78 songs, in movements. Each as the AI heard it.</p>
+  <p class="sublede" id="catNote">All 78 songs, in movements. Each as the AI heard it.</p>
   <div id="catalogue"></div>
 </div></section>
 
@@ -239,10 +248,11 @@ function cardHTML(r) {
 }
 function renderCatalogue() {
   const root = document.getElementById("catalogue");
+  const pool = E_ONLY ? CATALOGUE.filter(isE) : CATALOGUE;
   let html = "";
   let mi = 0;
   ORDER.forEach(m => {
-    const songs = CATALOGUE.filter(r => r.movement === m);
+    const songs = pool.filter(r => r.movement === m);
     if (!songs.length) return;
     html += `<div class="movement-head"><div class="mnum" style="color:${COLOUR[m]}">Movement ${ROMAN[mi]||(mi+1)}</div>`+
       `<h3>${esc(m)}</h3><p class="mb">${esc(BLURB[m]||"")}</p></div>`;
@@ -265,6 +275,28 @@ function playSong(id) {
 
 function esc(s) { return String(s==null?"":s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-renderField(); renderFeelings(); renderCatalogue();
+/* ---------- "In the key of E" one-tap filter ---------- */
+let E_ONLY = false;
+function isE(r) { return (r.key || "").trim().split(/\s+/)[0].toUpperCase() === "E"; }
+function wireEFilter() {
+  const btn = document.getElementById("eFilter");
+  const note = document.getElementById("catNote");
+  if (!btn) return;
+  const nE = CATALOGUE.filter(isE).length;
+  if (!nE) { btn.style.display = "none"; return; }  // nothing to filter — hide the control
+  function apply() {
+    btn.setAttribute("aria-pressed", E_ONLY ? "true" : "false");
+    if (note) note.textContent = E_ONLY
+      ? `Showing the ${nE} songs in the key of E — tap the stat again for all ${CATALOGUE.length}.`
+      : `All ${CATALOGUE.length} songs, in movements. Each as the AI heard it.`;
+    renderCatalogue();
+    if (E_ONLY) document.getElementById("catalogue").scrollIntoView({behavior:"smooth", block:"start"});
+  }
+  function toggle() { E_ONLY = !E_ONLY; apply(); }
+  btn.addEventListener("click", toggle);
+  btn.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+}
+
+renderField(); renderFeelings(); renderCatalogue(); wireEFilter();
 </script>
 </body></html>
