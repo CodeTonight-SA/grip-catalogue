@@ -98,6 +98,34 @@
   .upcoming-card details .lyric-body { white-space:pre-wrap; font-size:12.5px; color:var(--ink); line-height:1.6; margin:7px 0 0; max-height:280px; overflow:auto; }
   footer { color:var(--muted); font-size:12.5px; padding:40px 0 60px; text-align:center; }
   footer .caveat { font-style:italic; max-width:680px; margin:8px auto 0; }
+  /* ---------- Listening Instrument: hero actions, live field sync, sticky player ---------- */
+  .hero-actions { display:flex; gap:10px; margin:18px 0 0; flex-wrap:wrap; }
+  .hero-actions button { font:inherit; font-size:13px; letter-spacing:.3px; padding:9px 16px;
+    border:1px solid var(--garnet-soft); background:transparent; color:var(--cream);
+    border-radius:22px; cursor:pointer; transition:background .15s, color .15s; }
+  .hero-actions button:hover { background:var(--garnet-soft); color:#1a1a1e; }
+  .card { transition:box-shadow .3s, border-color .3s; scroll-margin:90px 0; }
+  .card.playing { box-shadow:0 0 0 3px var(--garnet-soft); border-left-color:var(--garnet); }
+  .dot.playing { stroke:#1a1a1e; stroke-width:2; animation:dotpulse 1.1s ease-in-out infinite; }
+  @keyframes dotpulse { 0%,100% { r:6.5px; opacity:.82; } 50% { r:11px; opacity:1; } }
+  #player { position:fixed; left:0; right:0; bottom:0; z-index:40; background:var(--charcoal);
+    color:var(--cream); border-top:2px solid var(--garnet); box-shadow:0 -4px 24px rgba(0,0,0,.28); }
+  #player[hidden] { display:none; }
+  #player .pl-wrap { max-width:1080px; margin:0 auto; display:flex; align-items:center; gap:14px; padding:10px 18px; }
+  #player .pl-dot { width:12px; height:12px; border-radius:50%; background:var(--garnet); flex:0 0 auto; }
+  #player .pl-meta { min-width:0; flex:0 1 220px; }
+  #player .pl-title { font-family:Georgia,serif; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #player .pl-sub { font-size:11px; letter-spacing:.5px; color:#cdbac1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #player .pl-ctrls { display:flex; gap:4px; flex:0 0 auto; }
+  #player .pl-ctrls button { font-size:15px; width:38px; height:38px; border-radius:50%; border:1px solid #4a3138;
+    background:transparent; color:var(--cream); cursor:pointer; line-height:1; }
+  #player .pl-ctrls button:hover { background:var(--garnet); border-color:var(--garnet); }
+  #player .pl-seek { display:flex; align-items:center; gap:8px; flex:1 1 auto; font-size:11px; color:#cdbac1; min-width:120px; }
+  #player .pl-seek input[type=range] { flex:1 1 auto; accent-color:var(--garnet-soft); cursor:pointer; }
+  #player #plClose { background:transparent; border:none; color:#cdbac1; font-size:20px; cursor:pointer; flex:0 0 auto; }
+  #player #plClose:hover { color:var(--cream); }
+  @media (max-width:640px) { #player .pl-seek { display:none; } #player .pl-wrap { gap:10px; padding:8px 12px; } }
+  @media (prefers-reduced-motion: reduce) { .dot.playing { animation:none; } html { scroll-behavior:auto; } }
 </style></head>
 <body>
 <header class="overture"><div class="wrap">
@@ -105,6 +133,10 @@
   <h1>The Catalogue</h1>
   <p class="thesis">Songs by Laurie Scheepers — published tracks, demos, alt-mixes, pre-masters, and phone recordings — heard by the machine he built, and turned into something you can play, map, and search by how you feel.</p>
   <p style="margin:14px 0 0;font-family:Georgia,serif;"><a href="musical-thread.html" style="color:#b0667d;font-size:15px;letter-spacing:.5px;border-bottom:1px solid #8a2846;padding-bottom:2px;text-decoration:none;">Read: The Musical Thread — how this music is written, across the genres &rarr;</a></p>
+  <div class="hero-actions">
+    <button id="playAll" type="button" title="Play the catalogue from the top, one song into the next">&#9654;&nbsp; Play all</button>
+    <button id="surprise" type="button" title="Play a song at random">&#127922;&nbsp; Surprise me</button>
+  </div>
   <div class="numbers">
     <div class="n"><span class="big">78</span><span class="lab">Songs</span></div>
     <div class="n"><span class="big">7</span><span class="lab">Movements</span></div>
@@ -262,15 +294,132 @@ function renderCatalogue() {
   root.innerHTML = html;
 }
 
-/* ---------- play helper: scroll to a song's card and start it ---------- */
-function playSong(id) {
-  const card = document.getElementById("song-"+id);
-  if (!card) return;
-  card.scrollIntoView({behavior:"smooth", block:"center"});
-  const a = card.querySelector("audio");
-  if (a) { document.querySelectorAll("audio").forEach(x => { if(x!==a) x.pause(); }); a.play().catch(()=>{}); }
-  card.style.transition="box-shadow .3s"; card.style.boxShadow="0 0 0 3px var(--garnet-soft)";
-  setTimeout(()=>card.style.boxShadow="none", 1400);
+/* ---------- The Listening Instrument: one continuous player over 78 songs ----------
+   Every play entry point (native card controls, scatter dots, mood finder, shuffle,
+   deep-link) is unified by capturing media events at document level — so the sticky
+   player, the card glow, and the Emotional-Field dot all light up in sync, and one
+   song flows into the next. No change to how cards are built. */
+var ACTIVE = null;   // the <audio> currently in charge
+var ORDER_IDS = [];  // catalogue display order, for prev/next/auto-advance
+var REDUCE = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+function buildOrderIds() {
+  var ids = [];
+  ORDER.forEach(function(m) {
+    CATALOGUE.filter(function(r) { return r.movement === m; })
+             .forEach(function(r) { ids.push(r.id); });
+  });
+  CATALOGUE.forEach(function(r) { if (ids.indexOf(r.id) < 0) ids.push(r.id); });
+  return ids;
+}
+function recOf(id) { for (var i=0;i<CATALOGUE.length;i++) if (CATALOGUE[i].id===id) return CATALOGUE[i]; return null; }
+function cardOf(id) { return document.getElementById("song-"+id); }
+function audioOf(id) { var c = cardOf(id); return c ? c.querySelector("audio") : null; }
+function idOfAudio(a) { var c = a && a.closest ? a.closest(".card") : null; return c ? c.id.replace(/^song-/, "") : null; }
+function dotOf(id) {
+  var i=-1; for (var k=0;k<CATALOGUE.length;k++) if (CATALOGUE[k].id===id) { i=k; break; }
+  return i<0 ? null : document.querySelector('.dot[data-i="'+i+'"]');
+}
+function fmtTime(s) { s=Math.floor(s||0); var m=Math.floor(s/60), ss=s%60; return m+":"+(ss<10?"0":"")+ss; }
+
+function highlight(id) {
+  var c2 = document.querySelectorAll(".card.playing"); for (var i=0;i<c2.length;i++) c2[i].classList.remove("playing");
+  var c = cardOf(id); if (c) c.classList.add("playing");
+  var d2 = document.querySelectorAll(".dot.playing"); for (var j=0;j<d2.length;j++) d2[j].classList.remove("playing");
+  var d = dotOf(id); if (d) d.classList.add("playing");
+}
+function updateBar(id) {
+  var r = recOf(id); if (!r) return;
+  var bar = document.getElementById("player"); bar.removeAttribute("hidden");
+  document.body.style.paddingBottom = "76px";
+  document.getElementById("plTitle").textContent = r.title || "";
+  document.getElementById("plSub").textContent =
+    [r.movement, (r.tempo_bpm ? Math.round(r.tempo_bpm)+" BPM" : ""), fmtKey(r)].filter(Boolean).join(" · ");
+  document.getElementById("plDot").style.background = COLOUR[r.movement] || "var(--garnet)";
+}
+function playById(id) {
+  var card = cardOf(id);
+  if (card) card.scrollIntoView({behavior: REDUCE ? "auto" : "smooth", block: "center"});
+  var a = audioOf(id);
+  if (a) a.play().catch(function(){});   // the captured 'play' handler does the rest
+}
+function playSong(id) { playById(id); }   // scatter dots + legacy callers route here
+function step(dir) {
+  var id = ACTIVE ? idOfAudio(ACTIVE) : null;
+  var i = id ? ORDER_IDS.indexOf(id) : -1;
+  var ni = i<0 ? 0 : (i + dir + ORDER_IDS.length) % ORDER_IDS.length;
+  playById(ORDER_IDS[ni]);
+}
+function onPlay(a) {
+  if (!a || a.tagName !== "AUDIO") return;
+  var all = document.querySelectorAll("audio");
+  for (var i=0;i<all.length;i++) if (all[i] !== a) all[i].pause();   // single stream
+  ACTIVE = a;
+  var id = idOfAudio(a); if (!id) return;
+  updateBar(id); highlight(id);
+  document.getElementById("plToggle").innerHTML = "&#10074;&#10074;";
+  try { history.replaceState(null, "", "#"+id); } catch(e) {}
+}
+function buildPlayer() {
+  var bar = document.createElement("div");
+  bar.id = "player"; bar.setAttribute("hidden", ""); bar.setAttribute("role", "region"); bar.setAttribute("aria-label", "Now playing");
+  bar.innerHTML =
+    '<div class="pl-wrap">'+
+      '<span class="pl-dot" id="plDot"></span>'+
+      '<div class="pl-meta"><div class="pl-title" id="plTitle"></div><div class="pl-sub" id="plSub"></div></div>'+
+      '<div class="pl-ctrls">'+
+        '<button id="plPrev" type="button" aria-label="Previous song" title="Previous">&#9198;</button>'+
+        '<button id="plToggle" type="button" aria-label="Play or pause" title="Play / pause">&#9654;</button>'+
+        '<button id="plNext" type="button" aria-label="Next song" title="Next">&#9197;</button>'+
+      '</div>'+
+      '<div class="pl-seek"><span id="plCur">0:00</span>'+
+        '<input id="plBar" type="range" min="0" max="1000" value="0" aria-label="Seek within song">'+
+        '<span id="plDur">0:00</span></div>'+
+      '<button id="plClose" type="button" aria-label="Close player" title="Close">&times;</button>'+
+    '</div>';
+  document.body.appendChild(bar);
+  document.getElementById("plToggle").addEventListener("click", function() {
+    if (!ACTIVE) { if (ORDER_IDS[0]) playById(ORDER_IDS[0]); return; }
+    if (ACTIVE.paused) ACTIVE.play().catch(function(){}); else ACTIVE.pause();
+  });
+  document.getElementById("plPrev").addEventListener("click", function() { step(-1); });
+  document.getElementById("plNext").addEventListener("click", function() { step(1); });
+  document.getElementById("plClose").addEventListener("click", function() {
+    if (ACTIVE) ACTIVE.pause(); bar.setAttribute("hidden", ""); document.body.style.paddingBottom = "";
+  });
+  var seek = document.getElementById("plBar");
+  seek.addEventListener("input", function() { if (ACTIVE && ACTIVE.duration) ACTIVE.currentTime = (seek.value/1000)*ACTIVE.duration; });
+}
+function initPlayer() {
+  ORDER_IDS = buildOrderIds();
+  buildPlayer();
+  document.addEventListener("play", function(e) { onPlay(e.target); }, true);
+  document.addEventListener("pause", function(e) { if (e.target === ACTIVE) document.getElementById("plToggle").innerHTML = "&#9654;"; }, true);
+  document.addEventListener("ended", function(e) { if (e.target === ACTIVE) step(1); }, true);
+  document.addEventListener("timeupdate", function(e) {
+    if (e.target !== ACTIVE) return;
+    var d = ACTIVE.duration || 0, t = ACTIVE.currentTime || 0;
+    if (d) document.getElementById("plBar").value = Math.round(t/d*1000);
+    document.getElementById("plCur").textContent = fmtTime(t);
+    document.getElementById("plDur").textContent = fmtTime(d);
+  }, true);
+  var pa = document.getElementById("playAll");
+  if (pa) pa.addEventListener("click", function() { if (ORDER_IDS[0]) playById(ORDER_IDS[0]); });
+  var su = document.getElementById("surprise");
+  if (su) su.addEventListener("click", function() {
+    var pool = E_ONLY ? CATALOGUE.filter(isE) : CATALOGUE;
+    if (!pool.length) return;
+    playById(pool[Math.floor(Math.random()*pool.length)].id);
+  });
+  document.addEventListener("keydown", function(e) {
+    var tag = (e.target.tagName || "").toLowerCase();
+    if (tag === "input" || tag === "textarea" || tag === "select") return;
+    if (e.key === " " || e.code === "Space") { if (ACTIVE) { e.preventDefault(); if (ACTIVE.paused) ACTIVE.play().catch(function(){}); else ACTIVE.pause(); } }
+    else if (e.key === "ArrowRight") { if (ACTIVE) { e.preventDefault(); step(1); } }
+    else if (e.key === "ArrowLeft") { if (ACTIVE) { e.preventDefault(); step(-1); } }
+  });
+  var h = (location.hash || "").replace(/^#/, "");   // deep-link: cue (no autoplay without a gesture)
+  if (h && recOf(h)) { var c = cardOf(h); if (c) { c.scrollIntoView({behavior:"auto", block:"center"}); highlight(h); } }
 }
 
 function esc(s) { return String(s==null?"":s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
