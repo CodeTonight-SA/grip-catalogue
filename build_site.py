@@ -563,7 +563,7 @@ function wireEFilter() {{
   btn.addEventListener("keydown", e => {{ if (e.key === "Enter" || e.key === " ") {{ e.preventDefault(); toggle(); }} }});
 }}
 
-renderField(); renderFeelings(); renderCatalogue(); wireEFilter();
+renderField(); renderFeelings(); renderCatalogue(); wireEFilter(); initPlayer();
 </script>
 </body></html>
 """
